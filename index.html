@@ -1,0 +1,225 @@
+<html>
+    <head>
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,900&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">  
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <title>Demo</title>
+      <script src="https://wzrd.in/standalone/formdata-polyfill"></script>
+      <script src="https://wzrd.in/standalone/promise-polyfill@latest"></script>
+      <script src="https://wzrd.in/standalone/whatwg-fetch@latest"></script>
+</head>
+<body background="190-1903367_dark-blue-minimalist-background.png", class="w3-animate-opacity">
+<!-- <div id="loading">
+  <img id="loading-image" src="loading-gif.gif" alt="Loading..." />
+</div> -->
+<div class="imgdiv">
+  <img src="dscicon.png" class="rightside">
+</div>
+<h1 style="text-indent: 50px; font-size: 40px; text-align:center;">Discord MOD APPLICATION for SABRE OFFICIAL discord server</h1>
+<h2>Please enter your details to proceed further</h2>
+<br>
+<div class="eform">
+
+<form name="login" id="form1" action="next.php" onsubmit="validateForm()" method="POST">
+    <label for="dscid">Discord Name:</label>
+    <input type="text" id="dscid" name="dscid" required><br><br><!--  -->
+    <label for="dscdsm">Discord Discriminator:</label>
+    <input type="text" id="dscdsm" name="dscdsm" required><br><br><!--  -->
+    <label for="email">Email Add (optional):</label>
+    <input type="text" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address"><br><br><!--  -->
+    <label for="ques1">Are you able to use basic moderation features of discord:</label>
+    <input type="radio" id="ques1op1" name="ques1" value="Yes">
+    <label for="ques1op1">Yes</label>
+    <input type="radio" id="ques1op2" name="ques1" value="No">
+    <label for="ques1op2">No</label><br><br><!--  -->
+    <label for="ques2">Are you able to use moderation bots like carlbot or mee6:</label>
+    <input type="radio" id="ques2op1" name="ques2" value="Yes">
+    <label for="ques2op1">Yes</label>
+    <input type="radio" id="ques1op2" name="ques2" value="No">
+    <label for="ques2op2">No</label><br><br><!--  -->
+    <label for="ques3">What would you do if someone in the server spams in any of the channel other than spamming channel:</label>
+    <input type="radio" id="ques3op1" name="ques3" value="Kick them">
+    <label for="ques3op1">Kick them</label>
+    <input type="radio" id="ques3op2" name="ques3" value="Ban them">
+    <label for="ques3op1">Ban them</label>
+    <input type="radio" id="ques3op3" name="ques3" value="Warn them">
+    <label for="ques3op1">Warn them</label>
+    <input type="radio" id="ques3op4" name="ques3" value="Do nothing">
+    <label for="ques1op2">Do nothing</label><br><br>
+    <label for="ques4">What would you do if someone misuses the bots or misbehaves in a bad way with any of the member or mod:</label>
+    <input type="radio" id="ques4op1" name="ques4" value="Kick them">
+    <label for="ques4op1">Kick them</label>
+    <input type="radio" id="ques4op2" name="ques4" value="Ban them">
+    <label for="ques3op1">Ban them</label>
+    <input type="radio" id="ques4op3" name="ques4" value="Warn them">
+    <label for="ques3op1">Warn them</label>
+    <input type="radio" id="ques4op4" name="ques4" value="Do nothing">
+    <label for="ques1op2">Do nothing</label><br><br>
+    <br>
+    <script>
+      function validateForm() {
+    var text = document.getElementById("email").value;
+
+    if (text.includes("sakshhamtg@gmail.com")) {
+      console.log("do something special because text contains apple");
+      alert("SO Its U i get it")
+    }
+    else if (text.includes("ball")) {
+      console.log("do something special because text contains ball");
+    }
+    else {
+      console.log("text contains no special word");
+    }
+  }
+  //   function validate2(){
+  // var first = document.getElementById("dscid").value;
+  // var password = document.getElementById("pswd").value;
+  // if ( first == "Sakshham" && password == "Password@2021"){
+  // location ("details.php");
+  //   }
+  //   else{
+  //     alert("Invalid username or password");
+  //     }
+  //   return false;
+  //   }
+  </script>
+      <div class="btnalign">
+        <button type="submit" class="signupbtn", id="sub">Next</button>
+        <button type="button" onclick="window.location.href='cancel.html'" class="cancelbtn">Cancel</button>
+      </div>
+</div>
+</form>
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzKgYRb2dQA423-DWJhQIqaFH8HiSzSuEzOAT9x/exec'
+  const form = document.forms['login']
+
+  form.addEventListener('submit', e => {
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      // .then(response => console.log('Success!', response, alert('Done')))
+      // .catch(error => {console.error('Error!', error.message, alert('No'));window.location.href="cancelpage.html";})
+  })
+</script>
+<style>
+    h1 {
+      font-family: 'Yusei Magic', sans-serif;
+      color: rgb(196, 209, 252);
+    }
+    h2{
+      font-family: 'Nunito', sans-serif;
+      color: rgb(253, 243, 228);
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+      font-family:sans-serif;
+      font-weight: bold;
+      border-radius: 10px;
+    }
+    .cancelbtn {
+      background-color: firebrick;
+      color: white;
+    }
+    .cancelbtn:hover {
+      background-color: #ff7e3d;
+      color:black;
+    }
+    .signupbtn {
+      background-color: rgb(149, 228, 32);
+    }
+
+    .signupbtn:hover {
+      background-color: #4af784;
+      color: black;
+    }
+
+    #dscid, #dscdsm, #email, #myInput {
+      height:40px;
+      font-size:14pt;
+      width: 300px;
+      outline: none;
+      background-color: rgb(203, 203, 252);
+      border-radius: 25px;
+      padding: 20px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    #dscid:focus, #dscdsm:focus, #email:focus, #myInput:focus {
+      box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+      border: 1px solid rgba(81, 203, 238, 1);
+      border-radius: 25px;
+      padding: 20px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    .eform label {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 18px;
+      color: rgb(228, 245, 255);
+      text-shadow: 1px 1px 0 #333,
+        -1px -1px 0 #333,
+        1px -1px 0 #333,
+        -1px 1px 0 #333,
+        2px 2px 5px rgba(0,0,0,0.65);
+    }
+    body{
+      
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      padding-left: 20px;
+    }
+    /* #loading {
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      position: fixed;
+      display: block;
+      opacity: 0.7;
+      background-color: #fff;
+      z-index: 99;
+      text-align: center;
+    }
+
+    #loading-image {
+      position: absolute;
+      top: 100px;
+      left: 240px;
+      z-index: 100;
+    } */
+    .eform input{
+      display: inline-block;
+    }
+    .eform label{
+      display: inline-block;
+      width: 230px;
+      
+    }
+    .radiolbl label{
+      display: inline-block;
+    }
+    #cbox {
+      font-size: 50px;
+    }
+    .rightside{
+      float:right;
+      clear:right;
+      margin-left:0px;
+      height: 450px;
+      width: 450px;
+    }
+</style>
+</body>
+</html>
