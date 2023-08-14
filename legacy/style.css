@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Jaldi:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syncopate&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo&display=swap');
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 50px;
+    background: #f3ecf9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #6a43c4;
+    border-radius: 10px;
+    max-height: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(89, 52, 113);
+}
+
+body {
+    max-width: 100vw;
+    scroll-behavior: smooth;
+}
+
+nav {
+    border-bottom-right-radius: 50px;
+    font-family: 'Jaldi', sans-serif;
+    font-size: larger;
+    background: linear-gradient(to left, #780206, #061161);
+}
+
+.one {
+    color: #758BFD;
+    padding-right: 25vw;
+}
+
+.one h2 {
+    width: 1vh;
+}
+
+
+.two {
+    color: #F7EF99;
+}
+
+#second {
+    background: url('assets/img/div2.png'), linear-gradient(90deg, rgba(255, 107, 107, 1) 0%, rgba(167, 0, 0, 1) 50%, rgba(255, 107, 107, 1) 100%) !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+}
+
+.two h2 {
+    width: 50vh;
+    text-align: end !important;
+    letter-spacing: -4px;
+    font-family: 'Jaldi', sans-serif !important;
+    font-weight: 700 !important;
+}
+
+.title {
+
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-weight: bold;
+    text-align: start;
+    padding-top: 30vh;
+    padding-left: 1vw;
+}
+
+
+.title h2 {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: -2px;
+}
+
+.five h2 {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: -2px;
+}
+
+
+.five h5 {
+    font-family: 'Jaldi', sans-serif;
+    text-align: center;
+    letter-spacing: -1px;
+}
+
+.five p {
+    font-family: 'Syncopate', sans-serif;
+    text-align: center;
+    letter-spacing: -1px;
+    font-size: small;
+}
+
+.five {
+    padding-top: 20px;
+}
+
+.title h1 {
+    font-family: 'Syncopate', sans-serif;
+    letter-spacing: -1px;
+}
+
+.title a {
+    text-decoration: none;
+    color: inherit
+}
+
+.title a:hover {
+    text-decoration: underline;
+}
+
+.avatar {
+    border-radius: 20px;
+    width: auto;
+    height: 100px;
+}
+
+.card {
+    margin: 50px 50px;
+    border-radius: 0% 0% 5% 5%;
+    min-height: 50vh;
+    background-color: rgb(41, 41, 55);
+    color: aliceblue;
+}
+
+.card-body {
+    padding: 20px;
+    position: absolute;
+    bottom: 10px;
+}
+
+.card-img-top {
+    width: 4vw;
+    float: right;
+    border-radius: 20%;
+    /* border: 2px solid #061161; */
+    margin: 10px;
+}
+
+#card1 .container-fluid {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("assets/img/fluttericon.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#card2 .container-fluid {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("assets/img/disnake.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#card3 .container-fluid {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("assets/img/jda.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.btn {
+    background-color: #464e8b;
+}
+
+#card4 .card-body {
+    /* position: absolute; */
+    align-self: center;
+}
+
+.four h2 {
+    width: 50vh;
+    text-align: end !important;
+    font-family: 'Jaldi', sans-serif !important;
+    font-weight: 700 !important;
+}
+
+.four {
+    color: #e799f7;
+    letter-spacing: 1px;
+}
+
+.four a:hover {
+    text-decoration: none;
+    filter: brightness(0.85);
+}
+
+#navbtn {
+    border: 0px;
+    background-color: #1652ab;
+    border-radius: 30%;
+}
+
+#navbtn:hover {
+    filter: brightness(0.85);
+}
+
+.spoiler {
+    background-color: gray;
+    color: transparent;
+    user-select: none;
+    overflow: hidden;
+}
+
+.spoiler:hover {
+    background-color: inherit;
+    color: inherit;
+}
+
+#fifth h2 {
+    color: rgb(96, 87, 0);
+}

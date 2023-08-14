@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/img/avatar.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Sakshham Bhagat - Portfolio Website</title>
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#mynav">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark" id="mynav">
+        <a class="navbar-brand mx-4" href="#">
+            <img src="assets/img/avatar.png" width="50" height="auto" alt="" style="border-radius: 25px;">
+        </a>
+        <button class="navbar-toggler mx-5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" onclick="navigate('first')" href="#first">Home</a>
+                <a class="nav-item nav-link" onclick="navigate('second')" href="#second">About</a>
+                <a class="nav-item nav-link" onclick="navigate('third')" href="#third">Projects</a>
+                <a class="nav-item nav-link" onclick="navigate('fourth')" href="#fourth">Socials</a>
+            </div>
+        </div>
+        <div class="container-fluid justify-content-end">
+            <a id="navbtn" class="btn btn-dark mx-4 btn-lg" href="https://github.com/SakshhamTheCoder"
+                target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+    </nav>
+    <div class="hmm">
+        <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel">What's This?</h5>
+                    </div>
+                    <div class="modal-body">
+                        <video src="assets/vid/lets see.mp4" poster="" width="100%"></video>
+                        <div class="text-center">
+                            <div class="btn-group" role="group" aria-label="Basic outlined example" id="controls">
+                                <button type="button" class="btn btn-outline-primary" id="play">Play</button>
+                                <button type="button" class="btn btn-outline-primary" id="stop">Stop</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="first"
+        style="background: rgb(38,27,31);background: linear-gradient(90deg, rgba(38,27,31,1) 0%, rgba(6,1,80,1) 50%, rgba(38,27,31,1) 100%);min-height: 90vh !important;">
+        <div class="title d-flex justify-content-around one">
+            <div class="d-flex justify-content-start">
+                <!-- <img class="avatar align-self-start m-5" src="avatar.png" alt="avatar"> -->
+                <h1>
+                    <span style="font-size:5rem;letter-spacing: -1px; font-weight: 700;" id="hello">HELLO!<br></span>Its
+                    Sakshham👋
+                </h1>
+            </div>
+            <div>
+                <h2>A techie and a programmer from
+                    <a href="https://en.wikipedia.org/wiki/Jammu" target="_blank">Jammu</a>, India
+                    <br>
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div id="second" style="background: rgb(255,107,107); min-height: 90vh;">
+        <!-- background-color: #261b1f;  -->
+        <!-- background-color: #FF6B6B -->
+        <div class="title d-flex justify-content-around two">
+            <div class="d-flex justify-content-end">
+                <h1>About<br><span style="font-size:5rem;letter-spacing: -1px; font-weight: 700;">ME!</span></h1>
+            </div>
+            <div>
+                <h2>
+                    I am a high school student who likes to code, play games, make music, play chess, listen to EDM and
+                    a lot more
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div id="third"
+        style="background: rgb(114,137,218);
+    background: linear-gradient(90deg, rgba(114,137,218,1) 0%, rgba(0,34,154,1) 50%, rgba(114,137,218,1) 100%); min-height: 90vh; padding: 50px;">
+        <!-- #4ECDC4   #ABE188   21A0A0   3066BE -->
+        <div class="container">
+            <h2 style="font-family: 'Syncopate', sans-serif;font-weight: 700; color: #fff371;">Projects</h2>
+            <div class="row">
+                <div class="col">
+                    <div class="card" style="width: 20vw;" id="card1">
+                        <div class="container-fluid">
+                            <img class="card-img-top" src="assets/img/ytdl.ico" alt="Title">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Youtube Downloader</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Dart(Flutter)</h6>
+                            <p class="card-text">A clean, simple app for downloading Youtube Videos in mp3 or mp4 format
+                            </p>
+                            <div class="d-grid">
+                                <a href="https://github.com/SakshhamTheCoder/flutter_youtube_downloader" target="_blank"
+                                    class="btn btn-dark">Know More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 20vw;" id="card2">
+                        <div class="container-fluid">
+                            <img class="card-img-top" src="assets/img/sabrebot.jpeg" alt="Title">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">SABRE-Bot</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Python(Disnake)</h6>
+                            <p class="card-text">A multipurpose Discord Bot with many features like Moderation, Images,
+                                Utilities etc. (currently private)</p>
+                            <div class="d-grid">
+                                <a href="https://sakshhamthecoder.github.io/sabreweb/" target="_blank"
+                                    class="btn btn-dark">Know More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 20vw;" id="card1">
+                        <div class="container-fluid">
+                            <img class="card-img-top" src="assets/img/ccdl.png" alt="Title">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Cowin Certificate Downloader</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Dart(Flutter)</h6>
+                            <p class="card-text">An app to easily download Cowin Vaccination Certificate with Mobile
+                                Number and Beneficiary ID</p>
+                            <div class="d-grid">
+                                <a href="https://github.com/SakshhamTheCoder/cowin_certificate_downloader_app"
+                                    target="_blank" class="btn btn-dark">Know More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 20vw;" id="card3">
+                        <div class="container-fluid">
+                            <img class="card-img-top" src="assets/img/mele.png" alt="Title">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Mele</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Kotlin(JDA)</h6>
+                            <p class="card-text">A music bot made for Discord that can play Youtube Videos as audio.
+                                (currently private)</p>
+                            <div class="d-grid">
+                                <a href="https://github.com/SakshhamTheCoder/MeleBotPublic" target="_blank"
+                                    class="btn btn-dark">Know More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="card" style="width: 20vw;" id="card4">
+                        <div class="card-body">
+                            <h5 class="card-title">and much more to come...</h5>
+                            <br><br>
+                            <div class="d-grid">
+                                <a href="https://github.com/SakshhamTheCoder/" target="_blank"
+                                    class="btn btn-dark">Follow
+                                    Github</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="fourth"
+        style="background: rgb(38,27,31);
+        background: linear-gradient(90deg, rgba(38,27,31,1) 15%, rgba(36,45,51,1) 50%, rgba(38,27,31,1) 85%); min-height: 90vh;">
+        <!-- background-color: #261b1f;  -->
+        <!-- background-color: #FF6B6B -->
+        <div class="title d-flex justify-content-around four">
+            <div class="d-flex justify-content-end">
+                <h1>My<br><span style="font-size:5rem;letter-spacing: -1px; font-weight: 700;">Socials</span></h1>
+            </div>
+            <div class="d-flex justify-content-around gap-3 btn-lg">
+                <div class="btn-group-vertical d-grid gap-3">
+                    <a class="btn btn-dark" style="background-color: #55acee; font-family:monospace;color: #FFF;"
+                        href="https://twitter.com/IamSakshham_28" target="_blank" role="button"><i
+                            class="fab fa-twitter me-2"></i>Twitter</a>
+                    <a class="btn btn-dark" style="background-color: #d43f8c; font-family:monospace;color: #FFF;"
+                        href="https://www.instagram.com/iamsakshham_28" target="_blank" role="button"><i
+                            class="fab fa-instagram me-2"></i>Instagram</a>
+                    <a class="btn btn-dark" style="background-color: #1a60c9; font-family:monospace;color: #FFF;"
+                        href="https://github.com/SakshhamTheCoder" target="_blank" role="button"><i
+                            class="fab fa-github me-2"></i>Github</a>
+                    <a class="btn btn-dark" style="background-color: #f4674b; font-family:monospace;color: #FFF;"
+                        href="https://www.reddit.com/user/SakshhamTheGamer" target="_blank" role="button"><i
+                            class="fab fa-reddit-alien me-2"></i>Reddit</a>
+                    <a class="btn btn-dark" style="background-color: #eeb655; font-family:monospace;color: #FFF;"
+                        href="https://stackoverflow.com/users/14649187/sakshhamthecoder" target="_blank"
+                        role="button"><i class="fab fa-stack-overflow me-2"></i>SO</a>
+                </div>
+                <div class="btn-group-vertical d-grid gap-3">
+                    <a class="btn btn-dark" style="background-color: #f73d3d; font-family:monospace;color: #FFF;"
+                        href="https://www.youtube.com/channel/UCG7-J2y1mItTo0JttKnakRg" target="_blank" role="button"><i
+                            class="fab fa-youtube me-2"></i>Youtube</a>
+                    <a class="btn btn-dark" style="background-color: #1ed760; font-family:monospace;color: #FFF;"
+                        href="https://open.spotify.com/user/dwfi2gnrcbj8ly18nr513qcxh?si=d263e3863ec5456e"
+                        target="_blank" role="button"><i class="fab fa-spotify me-2"></i>Spotify</a>
+                    <a class="btn btn-dark" style="background-color: #21264b; font-family:monospace;color: #FFF;"
+                        href="https://steamcommunity.com/profiles/76561198832509885" target="_blank" role="button"><i
+                            class="fab fa-steam me-2"></i>Steam</a>
+                    <a class="btn btn-dark" style="background-color: #70a444; font-family:monospace;color: #FFF;"
+                        href="https://www.chess.com/member/SakshhamTheGamer" target="_blank" role="button"><i
+                            class="fas fa-chess-pawn me-2"></i>Chess.com</a>
+                    <!-- to be checked -->
+                    <!-- to be checked -->
+                    <a class="btn btn-dark" style="background-color: #7d8a9b; font-family:monospace;color: #FFF;"
+                        href="https://lichess.org/@/SakshhamTheGamer" target="_blank" role="button"><i
+                            class="fas fa-chess-knight me-2"></i>Lichess</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="fifth" style="background: rgb(246, 244, 225); min-height: 20vh;">
+        <!-- background-color: #261b1f;  -->
+        <!-- background-color: #FF6B6B -->
+        <div class="five">
+            <div>
+                <h2>
+                    Thanks for visiting
+                </h2>
+                <p>
+                    PSST. <span class="spoiler">There's a hidden surprise for you. Lets see if you could find it. Good
+                        Luck.
+                    </span>
+                </p>
+                <h5>
+                    Made with ❤️ by Sakshham Bhagat (SakshhamTheCoder)
+                </h5>
+            </div>
+        </div>
+    </div>
+    <!-- Importing Script -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
