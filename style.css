@@ -147,6 +147,10 @@ img {
     border: #887d55 solid 2px;
 }
 
+.intro-btns>* {
+    margin: 5px;
+}
+
 
 /* #myCarousel {
     height: 100vh;
