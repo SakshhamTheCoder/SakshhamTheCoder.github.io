@@ -14,8 +14,10 @@ module.exports = {
             colors: {
                 primary: '#DA0037',
                 secondary: '#1C1C1C',
-                tertiary: '#444444',
-                textColor: '#E5E5E5',
+                // tertiary: '#444444',
+                tertiary: '#c49d9d',
+                // textColor: '#E5E5E5',
+                textColor: '#444444',
                 // primary: '#537FE7',
                 // secondary: '#181823',
                 // tertiary: '#E9F8F9',

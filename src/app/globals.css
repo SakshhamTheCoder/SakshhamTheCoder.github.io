@@ -8,9 +8,12 @@
     --background-end-rgb: 255, 255, 255;
 } */
 :root {
-    --foreground-rgb: 237, 237, 237;
-    --background-start-rgb: 17, 17, 17;
-    --background-end-rgb: 17, 17, 17;
+    --foreground-rgb: 229, 229, 229;
+    /* --background-start-rgb: 17, 17, 17; */
+    /* --background-end-rgb: 17, 17, 17; */
+    --background-start-rgb: 19, 9, 9;
+    --background-end-rgb: 19, 9, 9;
+
     /* --background-end-rgb: 24, 24, 35; */
 }
 

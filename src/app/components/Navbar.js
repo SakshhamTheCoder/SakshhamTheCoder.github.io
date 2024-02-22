@@ -30,15 +30,15 @@ const Navbar = () => {
     return (
         <nav
             className="transition-shadow duration-200
-        hover:shadow-[5px_5px_rgba(217,_0,_55,_0.4),_10px_10px_rgba(217,_0,_55,_0.3),_15px_15px_rgba(217,_0,_55,_0.2),_20px_20px_rgba(217,_0,_55,_0.1),_25px_25px_rgba(217,_0,_55,_0.05)] 
-        fixed hidden xl:flex flex-col right-0 top-1/2 transform -translate-y-1/2 bg-primary mx-8 p-4 rounded-3xl items-center justify-center"
+        xl:hover:shadow-[5px_5px_rgba(217,_0,_55,_0.4),_10px_10px_rgba(217,_0,_55,_0.3),_15px_15px_rgba(217,_0,_55,_0.2),_20px_20px_rgba(217,_0,_55,_0.1),_25px_25px_rgba(217,_0,_55,_0.05)] 
+        fixed flex sm:h-auto sm:left-auto sm:bottom-auto flex-row sm:flex-col sm:right-0 sm:top-1/2 bottom-0 left-0 right-0 transform -translate-y-1/4 sm:-translate-y-1/2 bg-primary mx-8 p-4 rounded-3xl items-center justify-around sm:justify-center"
         >
             <audio ref={audioRef} src="/click.mp3" />
             {links.map(({ href, label, icon }) => (
                 <Link onClick={play} key={`${href}${label}`} href={href}>
                     <div className="relative">
                         <p
-                            className={`my-4 p-4 rounded-xl transition-all duration-200 ${
+                            className={`mx-2 sm:my-4 p-2 sm:p-4 rounded-xl transition-all duration-200 ${
                                 currentPath === href
                                     ? 'bg-secondary hover:shadow-[0px_0px_16px_#1C1C1C]'
                                     : 'hover:bg-[#1c1c1c50]'
@@ -48,7 +48,7 @@ const Navbar = () => {
                         >
                             {icon}
                             {tooltip === label && (
-                                <div className="absolute bg-gray-200 text-gray-800 px-2 py-1 rounded-md -left-24 top-1/2 transform -translate-y-1/2">
+                                <div className="hidden sm:block absolute bg-gray-200 text-gray-800 px-2 py-1 rounded-md -left-24 top-1/2 transform -translate-y-1/2">
                                     {tooltip}
                                 </div>
                             )}

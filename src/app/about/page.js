@@ -35,12 +35,12 @@ export default function About() {
         },
     ];
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center">
-            <h1 className="my-2 text-8xl font-bold w-full text-center">
+        <main className="px-8 py-24 sm:px-48 sm:py-8 flex min-h-screen flex-col items-center justify-center">
+            <h1 className="my-2 text-4xl sm:text-8xl font-bold w-full text-center">
                 About
                 <HighlightedSpan>me</HighlightedSpan>
             </h1>
-            <div className="px-48 py-16 w-full grid grid-cols-3 auto-rows-fr">
+            <div className="w-full grid grid-rows-1 sm:grid-cols-3 auto-rows-fr">
                 {aboutCards.map((card) => (
                     <div
                         key={card.title}
