@@ -36,15 +36,14 @@ export default function About() {
     ];
     return (
         <main className="px-8 py-24 sm:px-48 sm:py-8 flex min-h-screen flex-col items-center justify-center">
-            <h1 className="my-2 text-4xl sm:text-8xl font-bold w-full text-center">
-                About
-                <HighlightedSpan>me</HighlightedSpan>
+            <h1 className="my-2 text-5xl sm:text-8xl font-bold w-full text-center">
+                About <HighlightedSpan>me</HighlightedSpan>
             </h1>
             <div className="w-full grid grid-rows-1 sm:grid-cols-3 auto-rows-fr">
                 {aboutCards.map((card) => (
                     <div
                         key={card.title}
-                        className="hover:border-primary hover:bg-primary m-2 flex flex-row items-center justify-start bg-transparent p-4 rounded-xl border-2 border-tertiary"
+                        className="sm:hover:border-primary sm:hover:bg-primary m-2 flex flex-row items-center justify-start bg-transparent p-4 rounded-xl border-2 border-tertiary"
                     >
                         <div className="w-1/3 flex justify-center">{card.icon}</div>
                         <div className="w-2/3 mx-4">

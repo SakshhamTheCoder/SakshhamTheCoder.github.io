@@ -9,7 +9,7 @@ export default function Projects() {
             link: 'cowin_certificate_downloader_app',
         },
         {
-            name: 'Flutter Youtube Downloade',
+            name: 'Flutter Youtube Downloader',
             description: 'A Windows App made in Flutter to download mp3 or mp4 from a Youtube video.',
             link: 'flutter_youtube_downloader',
         },
@@ -49,15 +49,14 @@ export default function Projects() {
     ];
     return (
         <main className="px-8 py-24 sm:px-48 sm:py-8 flex min-h-screen flex-col items-center justify-center">
-            <h1 className="my-2 text-2xl sm:text-8xl font-bold w-full text-center">
-                Projects
-                <HighlightedSpan>I've worked on</HighlightedSpan>
+            <h1 className="my-2 text-4xl sm:text-8xl font-bold w-full text-center">
+                Projects <HighlightedSpan>I've worked on</HighlightedSpan>
             </h1>
             <div className="w-full grid grid-rows-1 sm:grid-cols-2 auto-rows-fr">
                 {projects.map((project) => (
                     <div
                         key={project.name}
-                        className="m-2 flex flex-col sm:flex-row items-center justify-between bg-transparent p-4 rounded-xl border-2 hover:border-primary border-tertiary"
+                        className="m-2 flex flex-col sm:flex-row items-center justify-between bg-transparent p-4 rounded-xl border-2 sm:hover:border-primary border-tertiary"
                     >
                         <div className="sm:w-3/4 px-2">
                             <h2 className="font-bold my-2 text-xl">{project.name}</h2>

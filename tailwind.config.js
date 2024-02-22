@@ -18,6 +18,7 @@ module.exports = {
                 tertiary: '#c49d9d',
                 // textColor: '#E5E5E5',
                 textColor: '#444444',
+                background: '#130909',
                 // primary: '#537FE7',
                 // secondary: '#181823',
                 // tertiary: '#E9F8F9',

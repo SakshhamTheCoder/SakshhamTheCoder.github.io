@@ -40,15 +40,15 @@ const Navbar = () => {
                         <p
                             className={`mx-2 sm:my-4 p-2 sm:p-4 rounded-xl transition-all duration-200 ${
                                 currentPath === href
-                                    ? 'bg-secondary hover:shadow-[0px_0px_16px_#1C1C1C]'
-                                    : 'hover:bg-[#1c1c1c50]'
+                                    ? 'bg-background hover:shadow-[0px_0px_16px_#130909]'
+                                    : 'hover:bg-[#13090950]'
                             }`}
                             onMouseEnter={() => handleMouseEnter(label)}
                             onMouseLeave={handleMouseLeave}
                         >
                             {icon}
                             {tooltip === label && (
-                                <div className="hidden sm:block absolute bg-gray-200 text-gray-800 px-2 py-1 rounded-md -left-24 top-1/2 transform -translate-y-1/2">
+                                <div className="hidden sm:block absolute bg-gray-200 text-gray-800 px-2 py-1 rounded-md right-28 top-1/2 transform -translate-y-1/2">
                                     {tooltip}
                                 </div>
                             )}

@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
             <meta name="msapplication-TileColor" content="#DA0037" />
             <meta name="msapplication-navbutton-color" content="#DA0037" />
             <meta name="apple-mobile-web-app-status-bar-style" content="#DA0037" />
-            <body className={inter.className}>
+            <body className={inter.className + ' select-none'}>
                 <BodyLayout>{children}</BodyLayout>
             </body>
         </html>
