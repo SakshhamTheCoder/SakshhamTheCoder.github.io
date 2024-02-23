@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import BodyLayout from './components/BodyLayout';
+import ParticlesBackrgound from './components/ParticlesBackground';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,9 +21,10 @@ export default function RootLayout({ children }) {
             <meta name="msapplication-navbutton-color" content="#DA0037" />
             <meta name="apple-mobile-web-app-status-bar-style" content="#DA0037" />
             <body className={inter.className + ' select-none'}>
-                <BodyLayout>{children}</BodyLayout>
+                <ParticlesBackrgound>
+                    <BodyLayout>{children}</BodyLayout>
+                </ParticlesBackrgound>
             </body>
         </html>
     );
 }
-
