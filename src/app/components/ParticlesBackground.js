@@ -6,6 +6,7 @@ import { particleConfig } from './particles';
 
 const ParticlesBackrgound = ({ children }) => {
     useEffect(async () => {
+        console.log('test');
         await initParticlesEngine(async (engine) => {
             await loadSlim(engine);
         });
@@ -13,7 +14,7 @@ const ParticlesBackrgound = ({ children }) => {
 
     return (
         <>
-            <Particles id="tsparticles" options={particleConfig} />
+            <Particles key="tsparticles" id="tsparticles" options={particleConfig} />
             {children}
         </>
     );
