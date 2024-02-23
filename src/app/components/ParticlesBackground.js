@@ -1,23 +1,25 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
 import { particleConfig } from './particles';
 
-const ParticlesBackrgound = ({ children }) => {
-    useEffect(async () => {
+const ParticlesBackground = ({ children }) => {
+    useEffect(() => {
         console.log('test');
-        await initParticlesEngine(async (engine) => {
+        initParticlesEngine(async (engine) => {
             await loadSlim(engine);
         });
     }, []);
 
+    const options = useMemo(() => particleConfig, []);
+
     return (
         <>
-            <Particles key="tsparticles" id="tsparticles" options={particleConfig} />
+            <Particles options={options} />
             {children}
         </>
     );
 };
 
-export default ParticlesBackrgound;
+export default ParticlesBackground;

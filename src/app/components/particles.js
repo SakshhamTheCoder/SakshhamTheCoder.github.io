@@ -2,7 +2,7 @@ export const particleConfig = {
     autoPlay: true,
     fullScreen: {
         enable: true,
-        zIndex: 0,
+        zIndex: -1,
     },
     detectRetina: true,
     fpsLimit: 90,
