@@ -1,13 +1,13 @@
 'use client';
 import { useEffect } from 'react';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
-import { loadFull } from 'tsparticles';
+import { loadSlim } from '@tsparticles/slim';
 import { particleConfig } from './particles';
 
 const ParticlesBackrgound = ({ children }) => {
     useEffect(() => {
         initParticlesEngine(async (engine) => {
-            await loadFull(engine);
+            await loadSlim(engine);
         });
     }, []);
 
