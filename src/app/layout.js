@@ -10,7 +10,19 @@ export const metadata = {
         template: '%s | Sakshham Bhagat',
         default: 'Sakshham Bhagat',
     },
-    description: 'Portfolio website of Sakshham Bhagat',
+    description: 'Portfolio website for Sakshham Bhagat',
+    openGraph: {
+        title: 'Sakshham Bhagat',
+        description: 'Portfolio website for Sakshham Bhagat',
+        url: 'https://sakshhamthecoder.github.io',
+        site_name: 'Sakshham Bhagat',
+        images: [
+            {
+                url: 'https://sakshhamthecoder.github.io/og-image.jpeg',
+                alt: 'Sakshham Bhagat',
+            },
+        ],
+    },
 };
 
 export default function RootLayout({ children }) {
