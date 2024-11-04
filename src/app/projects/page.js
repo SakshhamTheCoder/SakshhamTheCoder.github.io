@@ -6,11 +6,11 @@ export default function Projects() {
             name: 'CCS Merch Store',
             description:
                 'A merch store website made for Creative Computing Society.',
-            link: 'https://github.com/creative-computing-society/merch-store/',
+            link: 'https://github.com/creative-computing-society/merch-store',
         },
         {
             name: 'GoSnap',
-            description: 'A website for editing images with various filters, effects and tools',
+            description: 'A website for editing images with various filters, effects and tools.',
             link: 'https://github.com/SakshhamTheCoder/GoSnap',
         },
         {
@@ -40,7 +40,7 @@ export default function Projects() {
         {
             name: 'Thapar Class Checker (broken/old)',
             description:
-                'An app made in Flutter to view your class schedule at a glance even when offline',
+                'An app made in Flutter to view your class schedule at a glance even when offline.',
             link: 'https://github.com/SakshhamTheCoder/thapar_class_checker',
         },
         {
@@ -67,7 +67,7 @@ export default function Projects() {
         {
             name: 'SabreChat (private)',
             description: 'A chat app made with Flutter as frontend and Firebase as backend.',
-            link: '',
+            link: 'https://github.com/SakshhamTheCoder',
         },
     ];
     return (
@@ -91,7 +91,7 @@ export default function Projects() {
                                 target="_blank"
                                 className="bg-primary hover:bg-[#DA003790] font-bold py-2 px-4 rounded-xl w-full text-center"
                             >
-                                View Project
+                                View Source
                             </a>
                         </div>
                     </div>

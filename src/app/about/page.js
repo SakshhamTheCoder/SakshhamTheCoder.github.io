@@ -19,7 +19,7 @@ export default function About() {
         { title: 'Location', description: 'Jammu, Jammu & Kashmir, India', icon: <MdLocationPin size={50} /> },
         {
             title: 'Education',
-            description: 'B.Tech. in CSE from Thapar Institute of Engineering & Technology, Patiala, Punjab, India',
+            description: 'B.Tech. in COE from Thapar Institute of Engineering & Technology, Patiala, Punjab, India',
             icon: <MdSchool size={50} />,
         },
         {
@@ -30,7 +30,7 @@ export default function About() {
         {
             title: 'Skills',
             description:
-                'React, Next.js, TailwindCSS, Python, Flutter, Firebase, MySQL, MongoDB, APIs, Java, Canva, FL Studio',
+                'React, Next.js, TailwindCSS, Python, Flutter, Firebase, SQL, MongoDB, APIs, Java, Canva, FL Studio',
             icon: <MdMiscellaneousServices size={50} />,
         },
     ];
