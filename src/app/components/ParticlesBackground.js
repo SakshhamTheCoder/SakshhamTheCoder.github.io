@@ -23,3 +23,4 @@ const ParticlesBackground = ({ children }) => {
 };
 
 export default ParticlesBackground;
+
