@@ -14,11 +14,11 @@ export const metadata = {
     openGraph: {
         title: 'Sakshham Bhagat',
         description: 'Portfolio website for Sakshham Bhagat',
-        url: 'https://sakshhamthecoder.github.io',
+        url: 'https://sakshham.tech',
         site_name: 'Sakshham Bhagat',
         images: [
             {
-                url: 'https://sakshhamthecoder.github.io/og-image.jpeg',
+                url: 'https://sakshham.tech/og-image.jpeg',
                 alt: 'Sakshham Bhagat',
             },
         ],

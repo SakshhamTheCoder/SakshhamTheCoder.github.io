@@ -36,7 +36,7 @@ export default function Home() {
                     GitHub
                 </a>
                 <a
-                    href="https://sakshhamthecoder.github.io/SKSHHM-Music/"
+                    href="https://music.sakshham.tech"
                     target="_blank"
                     className="w-full m-2 bg-primary hover:bg-[#DA003790] font-bold py-2 px-4 rounded-xl flex flex-row items-center justify-center"
                 >
@@ -53,3 +53,4 @@ export default function Home() {
         </main>
     );
 }
+
