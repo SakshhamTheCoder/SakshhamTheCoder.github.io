@@ -1,63 +1,82 @@
 'use client';
 
+import { motion } from 'motion/react';
+import { FaGithub, FaMusic } from 'react-icons/fa';
+import { Code2, User, Layers, GraduationCap, Sparkles, Link2 } from 'lucide-react';
+
+const Tile = ({ icon: Icon, title, children, className }) => (
+    <motion.div
+        whileHover={{ scale: 1.03 }}
+        transition={{ duration: 0.2 }}
+        className={`bg-[#DA003730] backdrop-blur-xl rounded-2xl p-4 shadow-md flex flex-col justify-between ${className}`}
+    >
+        <div className="flex items-center gap-2 text-primary mb-1">
+            <Icon size={16} />
+            <span className="text-[11px] uppercase tracking-widest text-primary/80">{title}</span>
+        </div>
+        <div className="text-white/85 text-[13px] leading-snug font-light">{children}</div>
+    </motion.div>
+);
+
 export default function Home() {
     return (
-        <main className="flex flex-col min-h-screen px-8 py-24 sm:px-48 sm:py-8 box-border">
-            <div
-                className="
-          grid
-          grid-cols-2
-          gap-4
-          flex-grow
-          auto-rows-fr
-          sm:grid-cols-6
-          sm:auto-rows-fr
-        "
-            >
-                {/* title */}
-                <div className="bg-[#DA003740] backdrop-blur-sm rounded-xl col-span-2 sm:col-span-6 flex items-center justify-center text-xl font-bold">
-                    <h1 className="font-bold w-full text-center">
-                        Hi 👋 I'm Sakshham, a developer
+        <main className="h-screen px-8 py-20 sm:px-48 sm:py-10 bg-gradient-to-br from-black via-[#0f0f0f] to-[#1a1a1a]">
+            <div className="grid h-full grid-cols-2 sm:grid-cols-6 auto-rows-fr gap-4">
+                {/* Hero */}
+                <motion.div
+                    initial={{ opacity: 0, y: -12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="col-span-2 sm:col-span-6 rounded-3xl bg-[#DA003750] backdrop-blur-xl p-6 text-center shadow-lg"
+                >
+                    <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
+                        Hi 👋 I’m <span className="text-primary">Sakshham</span>
                     </h1>
-                </div>
+                    <p className="mt-1 text-white/70 text-sm sm:text-base">Developer • Designer • Music Producer</p>
+                </motion.div>
 
-                {/* MOBILE LAYOUT (default) */}
-                <div className="bg-[#DA003740] backdrop-blur-sm rounded-xl col-span-2 row-span-2 sm:col-span-3 sm:row-span-3 flex items-center justify-center">
-                    <p className="text-center">
-                        About Me: I am a computer science student passionate about development, music production, and designing.
-                    </p>
-                </div>
+                <Tile icon={User} title="About" className="col-span-2 sm:col-span-3">
+                    Computer science student focused on building elegant software & creative experiences.
+                </Tile>
 
-                <div className="bg-[#DA003740] backdrop-blur-sm rounded-xl col-span-1 row-span-3 sm:col-span-1 sm:row-span-3 flex items-center justify-center">
-                    <p className="text-center">
-                        Skills: React, Next.js, TailwindCSS, Python, Flutter, Firebase, SQL, MongoDB, APIs, Java, Canva, FL Studio.
-                    </p>
-                </div>
+                <Tile icon={Code2} title="Skills" className="col-span-1 sm:col-span-2">
+                    React, Next.js, Tailwind, Flutter, Firebase, SQL, MongoDB, APIs, Java.
+                </Tile>
 
-                <div className="bg-[#DA003740] backdrop-blur-sm rounded-xl col-span-1 row-span-3 sm:col-span-2 sm:row-span-4 flex items-center justify-center">
-                    <p className="text-center">
-                        Projects: Check out my work like CCS Merch Store, GoSnap, PortaNote, and more.
-                    </p>
-                </div>
+                <Tile icon={Layers} title="Projects" className="col-span-1 sm:col-span-1">
+                    CCS Merch Store, GoSnap, PortaNote, Canvasify, SabreBOT & more.
+                </Tile>
 
-                <div className="bg-[#DA003740] backdrop-blur-sm rounded-xl col-span-2 row-span-1 sm:col-span-2 sm:row-span-3 flex items-center justify-center">
-                    <p className="text-center">
-                        Education: B.Tech. in COE from Thapar Institute of Engineering & Technology, Patiala, Punjab, India.
-                    </p>
-                </div>
+                <Tile icon={GraduationCap} title="Education" className="col-span-2 sm:col-span-2">
+                    B.Tech in COE — Thapar Institute of Engineering & Technology.
+                </Tile>
 
-                <div className="bg-[#DA003740] backdrop-blur-sm rounded-xl col-span-1 row-span-2 sm:col-span-2 sm:row-span-3 flex items-center justify-center">
-                    <p className="text-center">
-                        Hobbies: Music Production, Gaming, Designing, Photography.
-                    </p>
-                </div>
+                <Tile icon={Sparkles} title="Hobbies" className="col-span-1 sm:col-span-2">
+                    Music, Gaming, Designing, Photography.
+                </Tile>
 
-                <div className="bg-[#DA003740] backdrop-blur-sm rounded-xl col-span-1 row-span-2 sm:col-span-2 sm:row-span-2 flex items-center justify-center">
-                    <p className="text-center">
-                        Connect: Visit my <a href="https://github.com/sakshhamthecoder" target="_blank" className="text-primary underline">GitHub</a> or <a href="https://music.sakshham.tech" target="_blank" className="text-primary underline">Music Portfolio</a>.
-                    </p>
-                </div>
+                <Tile icon={Link2} title="Connect" className="col-span-1 sm:col-span-2">
+                    <div className="flex flex-col gap-2 mt-1">
+                        <a
+                            href="https://github.com/sakshhamthecoder"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-primary text-sm hover:underline"
+                        >
+                            <FaGithub /> GitHub
+                        </a>
+                        <a
+                            href="https://music.sakshham.tech"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-primary text-sm hover:underline"
+                        >
+                            <FaMusic /> Music Portfolio
+                        </a>
+                    </div>
+                </Tile>
             </div>
         </main>
     );
 }
+
