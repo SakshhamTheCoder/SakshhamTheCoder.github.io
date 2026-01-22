@@ -8,10 +8,15 @@ const BodyLayout = ({ children }) => {
 
     return (
         <>
-            <Transition key={currentPath}>{children}</Transition>
-            <Navbar />
+            <Transition key={currentPath}>
+                <main className="min-h-screen w-full max-w-8xl mx-auto p-4 flex flex-col gap-4">
+                    <Navbar />
+                    {children}
+                </main>
+            </Transition>
         </>
     );
 };
 
 export default BodyLayout;
+

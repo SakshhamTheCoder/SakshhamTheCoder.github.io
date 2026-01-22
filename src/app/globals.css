@@ -61,3 +61,7 @@ body {
         text-wrap: balance;
     }
 }
+
+.glass {
+    @apply bg-tertiary/[0.02] border border-tertiary/10 bg-clip-padding backdrop-filter backdrop-blur backdrop-saturate-100 backdrop-contrast-100;
+}
