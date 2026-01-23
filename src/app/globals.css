@@ -63,5 +63,13 @@ body {
 }
 
 .glass {
-    @apply bg-tertiary/[0.02] border border-tertiary/10 bg-clip-padding backdrop-filter backdrop-blur backdrop-saturate-100 backdrop-contrast-100;
+    @apply bg-tertiary/5 border border-tertiary/10 bg-clip-padding backdrop-filter backdrop-blur backdrop-saturate-100 backdrop-contrast-100 hover:bg-tertiary/10 transition-colors;
+}
+
+.glass-navbar {
+    @apply bg-tertiary/5 border border-tertiary/10 bg-clip-padding backdrop-filter backdrop-blur backdrop-saturate-100 backdrop-contrast-100;
+}
+
+.glass-navbar-popup {
+    @apply bg-tertiary/5 border border-tertiary/10 bg-clip-padding backdrop-filter backdrop-blur-2xl backdrop-saturate-100 backdrop-contrast-100;
 }

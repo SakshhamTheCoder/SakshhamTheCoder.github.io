@@ -1,7 +1,11 @@
+import { MdArrowOutward } from 'react-icons/md';
+import Link from 'next/link';
 import HighlightedSpan from '../components/HighlightedSpan';
 
 async function getProjects() {
-    const res = await fetch(`http://localhost:3000/api/projects`, { next: { revalidate: 300 } });
+    const res = await fetch(`http://localhost:3000/api/projects`, {
+        next: { revalidate: 300 },
+    });
     if (!res.ok) return [];
     const json = await res.json();
     return json.projects || [];
@@ -11,35 +15,37 @@ export default async function Projects() {
     const projects = await getProjects();
 
     return (
-        <div className="flex-1 flex flex-col gap-12">
+        <div className="flex-1 flex flex-col gap-4">
             {/* HEADER */}
-            <h1 className="text-4xl sm:text-8xl font-bold w-full text-center">
-                Projects <HighlightedSpan>I've worked on</HighlightedSpan>
-            </h1>
+            <div className="text-center my-4">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
+                    Project <HighlightedSpan>Portfolio</HighlightedSpan>
+                </h1>
+            </div>
 
-            {/* GRID */}
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 auto-rows-fr">
+            {/* PROJECT GRID */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {projects.map((project) => (
-                    <div
+                    <Link
                         key={project.id || project.name}
-                        className="m-2 flex flex-col sm:flex-row items-center justify-between p-4 rounded-xl border-2 border-tertiary sm:hover:border-primary"
+                        href={project.link}
+                        target="_blank"
+                        className="glass rounded-2xl p-6 group flex flex-col justify-between transition-all"
                     >
-                        <div className="sm:w-3/4 px-2">
-                            <h2 className="font-bold my-2 text-xl">{project.name}</h2>
-                            <p className="my-4 sm:my-2 sm:mr-1">{project.description}</p>
+                        {/* TEXT */}
+                        <div>
+                            <h2 className="text-xl font-bold text-primary mb-2">{project.name}</h2>
+                            <p className="text-sm text-tertiary line-clamp-4">{project.description}</p>
                         </div>
 
-                        <div className="flex justify-center items-center sm:w-1/4">
-                            <a
-                                href={project.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="bg-primary hover:bg-[#DA003790] font-bold py-2 px-4 rounded-xl w-full text-center"
-                            >
-                                View Source
-                            </a>
+                        {/* CTA */}
+                        <div className="flex items-center gap-2 text-primary mt-4 self-end">
+                            <span className="text-sm italic opacity-0 group-hover:opacity-100 transition-opacity">
+                                View
+                            </span>
+                            <MdArrowOutward size={22} />
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
