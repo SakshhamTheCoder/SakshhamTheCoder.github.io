@@ -1,9 +1,19 @@
-import { Inter } from 'next/font/google';
+import { Inter, Fira_Sans, Ubuntu, Lexend } from 'next/font/google';
 import './globals.css';
-import BodyLayout from './components/BodyLayout';
-import ParticlesBackground from './components/ParticlesBackground';
+import BodyLayout from '@/app/components/BodyLayout';
+import ParticlesBackground from '@/app/components/ParticlesBackground';
+import { getResumeLink } from '@/lib/getResumeLink';
+import { getProjects } from '@/lib/getProjects';
+import DataProvider from './context/DataContext';
+('@/app/context/DataContext');
 
 const inter = Inter({ subsets: ['latin'] });
+const firaSans = Fira_Sans({
+    subsets: ['latin'],
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+});
+const ubuntu = Ubuntu({ subsets: ['latin'], weight: ['400', '700'] });
+const lexend = Lexend({ subsets: ['latin'], weight: 'variable' });
 
 export const metadata = {
     title: {
@@ -25,17 +35,20 @@ export const metadata = {
     },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+    const [projects, resumeLink] = await Promise.all([getProjects(), getResumeLink()]);
     return (
         <html lang="en">
             <meta name="theme-color" content="#DA0037" />
             <meta name="msapplication-TileColor" content="#DA0037" />
             <meta name="msapplication-navbutton-color" content="#DA0037" />
             <meta name="apple-mobile-web-app-status-bar-style" content="#DA0037" />
-            <body className={inter.className + ' select-none'}>
-                <ParticlesBackground>
-                    <BodyLayout>{children}</BodyLayout>
-                </ParticlesBackground>
+            <body className={firaSans.className + ' select-none'}>
+                <DataProvider value={{ projects, resumeLink }}>
+                    <ParticlesBackground>
+                        <BodyLayout>{children}</BodyLayout>
+                    </ParticlesBackground>
+                </DataProvider>
             </body>
         </html>
     );

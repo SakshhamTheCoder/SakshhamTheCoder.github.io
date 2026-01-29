@@ -1,5 +1,3 @@
-'use client';
-
 import {
     MdCode,
     MdSchool,
@@ -8,6 +6,7 @@ import {
     MdCloud,
     MdDevices,
     MdMusicNote,
+    MdBuild,
     MdAutoGraph,
 } from 'react-icons/md';
 import HighlightedSpan from '../components/HighlightedSpan';
@@ -16,104 +15,144 @@ const SKILLS = [
     {
         title: 'Languages',
         icon: <MdTerminal />,
-        items: ['Python', 'JavaScript', 'Go', 'C/C++', 'Dart', 'SQL', 'Shell'],
+        items: ['Python', 'JavaScript', 'Go', 'C/C++', 'Dart', 'SQL', 'Shell', 'HTML/CSS'],
     },
     {
         title: 'Frameworks & Libraries',
         icon: <MdCode />,
-        items: ['React', 'Next.js', 'Flutter', 'Express', 'Django REST', 'FastAPI', 'TailwindCSS', 'React Native'],
+        items: [
+            'React',
+            'Next.js',
+            'Flutter',
+            'Express',
+            'Django REST',
+            'FastAPI',
+            'Flask',
+            'TailwindCSS',
+            'React Native',
+        ],
     },
     {
         title: 'Systems & Tooling',
         icon: <MdAutoGraph />,
-        items: ['Linux', 'Git & GitHub', 'Docker', 'NGINX', 'WebSockets', 'CLI / TUI', 'ADB'],
+        items: [
+            'Linux',
+            'Git & GitHub',
+            'Docker',
+            'NGINX',
+            'WebSockets',
+            'REST APIs',
+            'CLI / TUI',
+            'Android Debug Bridge',
+        ],
     },
     {
-        title: 'Databases & Backend',
+        title: 'Databases',
         icon: <MdDevices />,
-        items: ['PostgreSQL', 'MongoDB', 'MySQL', 'Firebase', 'Redis (basic)'],
+        items: ['PostgreSQL', 'MongoDB', 'MySQL', 'Firebase', 'Cloudinary'],
     },
     {
         title: 'Cloud & Deployment',
         icon: <MdCloud />,
-        items: ['GCP', 'Firebase', 'Azure', 'Vercel', 'Netlify', 'Cloudflare'],
+        items: ['Google Cloud Platform', 'Azure', 'Vercel', 'Netlify', 'Cloudflare'],
     },
     {
-        title: 'Creative & Other',
+        title: 'ML & Computer Vision',
+        icon: <MdAutoGraph />,
+        items: ['Generative AI', 'Scikit-Learn', 'MediaPipe', 'OpenCV', 'Pillow'],
+    },
+    {
+        title: 'Web APIs & Automation',
+        icon: <MdBuild />,
+        items: ['Postman', 'Insomnia', 'Selenium', 'BeautifulSoup', 'Payment Gateways', 'Discord Bots'],
+    },
+    {
+        title: 'Developer Environment',
+        icon: <MdTerminal />,
+        items: ['VS Code', 'Android Studio', 'PyCharm', 'IntelliJ', 'DataGrip', 'Jupyter Notebook', 'Google Colab'],
+    },
+    {
+        title: 'Creative Tools',
         icon: <MdMusicNote />,
-        items: ['FL Studio', 'UI/UX Design', 'Canva', 'MediaPipe', 'OpenCV'],
+        items: ['FL Studio', 'Figma', 'Canva', 'Clipchamp', 'LMMS', 'Audacity'],
     },
 ];
 
 export default function About() {
     return (
-        <div className="flex-1 flex flex-col gap-8">
-            {/* HEADER */}
-            <div className="text-center my-4">
+        <div className="flex-1 flex flex-col gap-6">
+            <div className="px-2 text-center">
                 <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
                     About <HighlightedSpan>Me</HighlightedSpan>
                 </h1>
             </div>
 
-            {/* TOP SECTION */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                {/* QUICK FACTS */}
+            <div className="flex flex-col lg:flex-row gap-6">
                 <div className="flex flex-col gap-4">
-                    <div className="glass rounded-2xl p-5 text-tertiary flex-1">
+                    <div className="glass rounded-2xl p-5 text-tertiary">
                         <div className="flex items-center gap-3 mb-2 text-primary">
                             <MdSchool />
                             <h4 className="font-bold">Education</h4>
                         </div>
-                        <p className="text-sm">
-                            B.E. Computer Engineering
-                            <br />
-                            Thapar Institute of Engineering & Technology
+                        <p className="text-sm leading-relaxed">
+                            B.E. in Computer Engineering from Thapar Institute of Engineering & Technology
                         </p>
                     </div>
 
-                    <div className="glass rounded-2xl p-5 text-tertiary flex-1">
+                    <div className="glass rounded-2xl p-5 text-tertiary">
                         <div className="flex items-center gap-3 mb-2 text-primary">
                             <MdLocationPin />
-                            <h4 className="font-bold">Based In</h4>
+                            <h4 className="font-bold">Location</h4>
                         </div>
-                        <p className="text-sm">India</p>
+                        <p className="text-sm">Patiala, Punjab, India</p>
                     </div>
 
-                    <div className="glass rounded-2xl p-5 text-tertiary flex-1">
+                    <div className="glass rounded-2xl p-5 text-tertiary">
                         <div className="flex items-center gap-3 mb-2 text-primary">
                             <MdCode />
-                            <h4 className="font-bold">Focus</h4>
+                            <h4 className="font-bold">Primary Focus</h4>
                         </div>
-                        <p className="text-sm">Systems, developer tools, full-stack products, applied research</p>
+                        <p className="text-sm leading-relaxed">
+                            I build web and mobile applications, along with the backend systems, APIs, databases, and
+                            tooling behind them
+                        </p>
+                    </div>
+
+                    <div className="glass rounded-2xl p-5 text-tertiary">
+                        <div className="flex items-center gap-3 mb-2 text-primary">
+                            <MdAutoGraph />
+                            <h4 className="font-bold">Technical Interests</h4>
+                        </div>
+                        <p className="text-sm leading-relaxed">
+                            I am interested in frontend architecture and user interface design, as well as backend
+                            systems, APIs, performance, and developer tooling
+                        </p>
                     </div>
                 </div>
 
-                {/* SKILLSET (PRIMARY CONTENT) */}
-                <div className="lg:col-span-2">
-                    <div className="glass rounded-2xl p-6 text-tertiary h-full">
-                        <h2 className="text-lg font-bold text-primary mb-4 tracking-wide">Technical Skillset</h2>
+                <div className="glass-navbar rounded-2xl p-6 text-tertiary flex-2">
+                    <h2 className="text-lg font-bold text-primary mb-5">Technical Skillset</h2>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {SKILLS.map((group) => (
-                                <div key={group.title}>
-                                    <div className="flex items-center gap-2 mb-2 text-primary">
-                                        <span className="text-lg">{group.icon}</span>
-                                        <h3 className="font-bold text-sm">{group.title}</h3>
-                                    </div>
-
-                                    <div className="flex flex-wrap gap-2">
-                                        {group.items.map((skill) => (
-                                            <span
-                                                key={skill}
-                                                className="text-xs px-3 py-1 rounded-full border border-tertiary/20"
-                                            >
-                                                {skill}
-                                            </span>
-                                        ))}
-                                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                        {SKILLS.map((group) => (
+                            <div key={group.title}>
+                                <div className="flex items-center gap-2 mb-3 text-primary">
+                                    <span className="text-lg">{group.icon}</span>
+                                    <h3 className="font-bold text-sm uppercase tracking-wide">{group.title}</h3>
                                 </div>
-                            ))}
-                        </div>
+
+                                <div className="flex flex-wrap gap-2">
+                                    {group.items.map((skill) => (
+                                        <span
+                                            key={skill}
+                                            className="text-xs px-3 py-1 rounded-full border border-tertiary/20 hover:border-primary/40 transition"
+                                        >
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

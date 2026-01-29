@@ -6,7 +6,6 @@ import { particleConfig } from './particles';
 
 const ParticlesBackground = ({ children }) => {
     useEffect(() => {
-        console.log('test');
         initParticlesEngine(async (engine) => {
             await loadSlim(engine);
         });
