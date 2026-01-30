@@ -2,6 +2,7 @@ import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaBehance, FaMusic, FaGo
 import { MdArrowOutward, MdWork, MdSchool, MdGroups } from 'react-icons/md';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getResumeLink } from '@/lib/getResumeLink';
 
 const EXPERIENCE = [
     {
@@ -49,7 +50,8 @@ const SOCIALS = [
     { id: 'music', href: 'https://music.sakshham.tech', icon: <FaMusic size={36} /> },
 ];
 
-export default function Home() {
+export default async function Home() {
+    const resumeLink = await getResumeLink();
     return (
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="flex flex-col gap-4">
@@ -93,7 +95,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col gap-4">
-                <div className="glass rounded-2xl relative overflow-hidden aspect-[4/3] lg:aspect-auto flex-1">
+                <div className="glass rounded-2xl relative overflow-hidden aspect-4/3 lg:aspect-auto flex-1">
                     <Image
                         src="https://avatars.githubusercontent.com/u/74554569?v=4"
                         alt="Sakshham"
@@ -104,7 +106,7 @@ export default function Home() {
                 </div>
 
                 <a
-                    href="/resume.pdf"
+                    href={resumeLink}
                     target="_blank"
                     rel="noreferrer"
                     className="glass rounded-2xl p-6 flex items-center justify-between gap-4 text-tertiary"

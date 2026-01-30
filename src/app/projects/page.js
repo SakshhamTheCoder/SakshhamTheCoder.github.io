@@ -1,11 +1,10 @@
 import { MdArrowOutward } from 'react-icons/md';
 import Link from 'next/link';
 import HighlightedSpan from '../components/HighlightedSpan';
-import { useData } from '../context/DataContext';
+import { getProjects } from '@/lib/getProjects';
 
 export default async function Projects() {
-    const { projects } = useData();
-
+    const projects = await getProjects();
     return (
         <div className="flex-1 flex flex-col gap-4">
             <div className="text-center my-4">

@@ -1,6 +1,10 @@
+import { cacheTag } from 'next/cache';
 import { db } from '@/lib/firebaseAdmin';
 
 export async function getProjects() {
+    'use cache';
+    cacheTag('projects');
+
     if (!db) return [];
 
     const snap = await db.collection('projects').get();
@@ -10,9 +14,8 @@ export async function getProjects() {
 
         return {
             id: d.id,
-            name: data.name ?? '',
-            description: data.description ?? '',
-            link: data.link ?? '',
+            ...data,
+            createdAt: data.createdAt ? data.createdAt.toDate().toISOString() : null,
         };
     });
 }

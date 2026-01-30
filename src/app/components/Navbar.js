@@ -4,17 +4,15 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { MdMenu, MdClose } from 'react-icons/md';
-import { useData } from '../context/DataContext';
 
 const NAV_LINKS = [
     { href: '/projects', label: 'PROJECTS' },
     { href: '/about', label: 'ABOUT' },
 ];
 
-const Navbar = () => {
+const Navbar = ({ resumeLink }) => {
     const pathname = usePathname();
     const [open, setOpen] = useState(false);
-    const { resumeLink } = useData();
 
     const isActive = (href) => {
         if (href === '/') return pathname === '/';

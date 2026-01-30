@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 :root {
     --background-start-rgb: 19, 9, 9;
@@ -8,6 +6,14 @@
 
     /* --background-end-rgb: 24, 24, 35; */
     --background-end-rgb: 25, 18, 16;
+}
+
+@theme {
+    --color-primary: #da0037;
+    --color-secondary: #1c1c1c;
+    --color-tertiary: #c49d9d;
+    --color-textColor: #444444;
+    --color-background: #130909;
 }
 
 /* @media (prefers-color-scheme: dark) {

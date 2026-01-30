@@ -1,19 +1,13 @@
-import { Inter, Fira_Sans, Ubuntu, Lexend } from 'next/font/google';
+import { Fira_Sans } from 'next/font/google';
 import './globals.css';
 import BodyLayout from '@/app/components/BodyLayout';
 import ParticlesBackground from '@/app/components/ParticlesBackground';
 import { getResumeLink } from '@/lib/getResumeLink';
-import { getProjects } from '@/lib/getProjects';
-import DataProvider from './context/DataContext';
-('@/app/context/DataContext');
 
-const inter = Inter({ subsets: ['latin'] });
 const firaSans = Fira_Sans({
     subsets: ['latin'],
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
-const ubuntu = Ubuntu({ subsets: ['latin'], weight: ['400', '700'] });
-const lexend = Lexend({ subsets: ['latin'], weight: 'variable' });
 
 export const metadata = {
     title: {
@@ -36,7 +30,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-    const [projects, resumeLink] = await Promise.all([getProjects(), getResumeLink()]);
+    const resumeLink = await getResumeLink();
     return (
         <html lang="en">
             <meta name="theme-color" content="#DA0037" />
@@ -44,11 +38,9 @@ export default async function RootLayout({ children }) {
             <meta name="msapplication-navbutton-color" content="#DA0037" />
             <meta name="apple-mobile-web-app-status-bar-style" content="#DA0037" />
             <body className={firaSans.className + ' select-none'}>
-                <DataProvider value={{ projects, resumeLink }}>
-                    <ParticlesBackground>
-                        <BodyLayout>{children}</BodyLayout>
-                    </ParticlesBackground>
-                </DataProvider>
+                <ParticlesBackground>
+                    <BodyLayout resumeLink={resumeLink}>{children}</BodyLayout>
+                </ParticlesBackground>
             </body>
         </html>
     );
