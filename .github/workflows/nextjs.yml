@@ -7,7 +7,7 @@ name: Deploy Next.js site to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["nextjs-23-02-24"]
+    branches: ["rewrite-19-01-26"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
