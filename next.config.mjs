@@ -4,7 +4,10 @@ const nextConfig = {
     images: {
         unoptimized: true,
     },
-    cacheComponents: true,
+    cacheComponents: false,
+    experimental: {
+        useCache: true,
+    },
 };
 
 export default nextConfig;
