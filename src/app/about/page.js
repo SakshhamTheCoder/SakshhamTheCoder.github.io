@@ -10,6 +10,8 @@ import {
     MdAutoGraph,
 } from 'react-icons/md';
 import HighlightedSpan from '../components/HighlightedSpan';
+import * as motion from 'motion/react-client';
+import { container, item } from '@/app/components/Transition';
 
 const SKILLS = [
     {
@@ -80,16 +82,16 @@ const SKILLS = [
 
 export default function About() {
     return (
-        <div className="flex-1 flex flex-col gap-6">
-            <div className="px-2 text-center">
+        <motion.div variants={container} initial="hidden" animate="visible" className="flex-1 flex flex-col gap-6">
+            <motion.div variants={item} className="px-2 text-center">
                 <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
                     About <HighlightedSpan>Me</HighlightedSpan>
                 </h1>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-col lg:flex-row gap-6">
-                <div className="flex flex-col gap-4">
-                    <div className="glass rounded-2xl p-5 text-tertiary">
+            <motion.div variants={container} className="flex flex-col lg:flex-row gap-6">
+                <motion.div variants={container} className="flex flex-col gap-4 flex-1">
+                    <motion.div variants={item} className="glass rounded-2xl p-5 text-tertiary">
                         <div className="flex items-center gap-3 mb-2 text-primary">
                             <MdSchool />
                             <h4 className="font-bold">Education</h4>
@@ -97,17 +99,17 @@ export default function About() {
                         <p className="text-sm leading-relaxed">
                             B.E. in Computer Engineering from Thapar Institute of Engineering & Technology
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="glass rounded-2xl p-5 text-tertiary">
+                    <motion.div variants={item} className="glass rounded-2xl p-5 text-tertiary">
                         <div className="flex items-center gap-3 mb-2 text-primary">
                             <MdLocationPin />
                             <h4 className="font-bold">Location</h4>
                         </div>
                         <p className="text-sm">Patiala, Punjab, India</p>
-                    </div>
+                    </motion.div>
 
-                    <div className="glass rounded-2xl p-5 text-tertiary">
+                    <motion.div variants={item} className="glass rounded-2xl p-5 text-tertiary">
                         <div className="flex items-center gap-3 mb-2 text-primary">
                             <MdCode />
                             <h4 className="font-bold">Primary Focus</h4>
@@ -116,9 +118,9 @@ export default function About() {
                             I build web and mobile applications, along with the backend systems, APIs, databases, and
                             tooling behind them
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="glass rounded-2xl p-5 text-tertiary">
+                    <motion.div variants={item} className="glass rounded-2xl p-5 text-tertiary">
                         <div className="flex items-center gap-3 mb-2 text-primary">
                             <MdAutoGraph />
                             <h4 className="font-bold">Technical Interests</h4>
@@ -127,15 +129,15 @@ export default function About() {
                             I am interested in frontend architecture and user interface design, as well as backend
                             systems, APIs, performance, and developer tooling
                         </p>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
 
-                <div className="glass-navbar rounded-2xl p-6 text-tertiary flex-2">
+                <motion.div variants={item} className="glass-navbar rounded-2xl p-6 text-tertiary flex-2">
                     <h2 className="text-lg font-bold text-primary mb-5">Technical Skillset</h2>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <motion.div variants={container} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                         {SKILLS.map((group) => (
-                            <div key={group.title}>
+                            <motion.div key={group.title} variants={item}>
                                 <div className="flex items-center gap-2 mb-3 text-primary">
                                     <span className="text-lg">{group.icon}</span>
                                     <h3 className="font-bold text-sm uppercase tracking-wide">{group.title}</h3>
@@ -151,12 +153,12 @@ export default function About() {
                                         </span>
                                     ))}
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </motion.div>
+                </motion.div>
+            </motion.div>
+        </motion.div>
     );
 }
 

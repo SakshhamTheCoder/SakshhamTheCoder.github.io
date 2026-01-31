@@ -48,7 +48,11 @@ body {
 }
 
 .glass {
-    @apply bg-tertiary/5 border border-tertiary/10 bg-clip-padding backdrop-filter backdrop-blur backdrop-saturate-100 backdrop-contrast-100 hover:bg-tertiary/10 transition-colors;
+    transition: scale 0.1s ease-in-out;
+}
+
+.glass {
+    @apply bg-tertiary/5 border border-tertiary/10 bg-clip-padding backdrop-filter backdrop-blur backdrop-saturate-100 backdrop-contrast-100 hover:bg-tertiary/10 hover:scale-[1.02];
 }
 
 .glass-navbar {

@@ -1,8 +1,10 @@
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaBehance, FaMusic, FaGoogle } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaMusic, FaGoogle } from 'react-icons/fa';
 import { MdArrowOutward, MdWork, MdSchool, MdGroups } from 'react-icons/md';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getResumeLink } from '@/lib/getResumeLink';
+import * as motion from 'motion/react-client';
+import { container, item } from '@/app/components/Transition';
 
 const EXPERIENCE = [
     {
@@ -52,21 +54,28 @@ const SOCIALS = [
 
 export default async function Home() {
     const resumeLink = await getResumeLink();
+
     return (
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="flex flex-col gap-4">
-                <div className="glass rounded-2xl p-6 flex flex-1 items-center">
+        <motion.div
+            variants={container}
+            initial="hidden"
+            animate="visible"
+            className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-4"
+        >
+            <motion.div variants={container} className="flex flex-col gap-4">
+                <motion.div variants={item} className="glass rounded-2xl p-6 flex flex-1 items-center">
                     <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl text-balance font-bold md:text-end text-primary leading-tight text-center">
                         <span className="text-tertiary"> I am a </span>
                         Developer
                         <span className="text-tertiary"> & </span>
                         Music Producer
                     </h2>
-                </div>
+                </motion.div>
 
-                <div className="grid grid-cols-2 gap-4 flex-1">
+                <motion.div variants={container} className="grid grid-cols-2 gap-4 flex-1">
                     {SOCIALS.slice(2, 4).map((s) => (
-                        <a
+                        <motion.a
+                            variants={item}
                             key={s.id}
                             href={s.href}
                             target="_blank"
@@ -74,28 +83,32 @@ export default async function Home() {
                             className="glass rounded-2xl p-6 flex items-center justify-center text-2xl text-primary"
                         >
                             {s.icon}
-                        </a>
+                        </motion.a>
                     ))}
-                </div>
+                </motion.div>
+                <motion.div variants={item} className="glass rounded-2xl p-6 text-tertiary group">
+                    <Link href="/about">
+                        <div className="flex items-center justify-between mb-3">
+                            <span className="text-2xl font-serif italic">About</span>
+                            <MdArrowOutward size={28} className="text-primary" />
+                        </div>
+                        <p className="text-md">
+                            I build software systems and
+                            <span className="italic ml-1 mr-1 text-primary">
+                                developer tools across web, mobile, and system-level domains
+                            </span>
+                            , focusing on performance, reliability, and usability. I enjoy building products end-to-end,
+                            from implementation to deployment and real-world iteration.
+                        </p>
+                    </Link>
+                </motion.div>
+            </motion.div>
 
-                <Link href="/about" className="glass rounded-2xl p-6 text-tertiary group">
-                    <div className="flex items-center justify-between mb-3">
-                        <span className="text-2xl font-serif italic">About</span>
-                        <MdArrowOutward size={28} className="text-primary" />
-                    </div>
-                    <p className="text-md">
-                        I build software systems and
-                        <span className="italic ml-1 mr-1 text-primary">
-                            developer tools across web, mobile, and system-level domains
-                        </span>
-                        , focusing on performance, reliability, and usability. I enjoy building products end-to-end,
-                        from implementation to deployment and real-world iteration.
-                    </p>
-                </Link>
-            </div>
-
-            <div className="flex flex-col gap-4">
-                <div className="glass rounded-2xl relative overflow-hidden aspect-4/3 lg:aspect-auto flex-1">
+            <motion.div variants={container} className="flex flex-col gap-4">
+                <motion.div
+                    variants={item}
+                    className="glass rounded-2xl relative overflow-hidden aspect-4/3 lg:aspect-auto flex-1"
+                >
                     <Image
                         src="https://avatars.githubusercontent.com/u/74554569?v=4"
                         alt="Sakshham"
@@ -103,9 +116,10 @@ export default async function Home() {
                         className="object-cover"
                         priority
                     />
-                </div>
+                </motion.div>
 
-                <a
+                <motion.a
+                    variants={item}
                     href={resumeLink}
                     target="_blank"
                     rel="noreferrer"
@@ -113,19 +127,21 @@ export default async function Home() {
                 >
                     <span className="text-4xl font-serif italic">Resume</span>
                     <MdArrowOutward size={28} className="text-primary" />
-                </a>
+                </motion.a>
 
-                <Link
-                    href="/projects"
-                    className="glass rounded-2xl p-6 flex justify-between items-center text-tertiary"
-                >
-                    <span className="text-4xl font-serif italic">Projects</span>
-                    <MdArrowOutward size={28} className="text-primary" />
-                </Link>
-            </div>
+                <motion.div variants={item}>
+                    <Link
+                        href="/projects"
+                        className="glass rounded-2xl p-6 flex justify-between items-center text-tertiary"
+                    >
+                        <span className="text-4xl font-serif italic">Projects</span>
+                        <MdArrowOutward size={28} className="text-primary" />
+                    </Link>
+                </motion.div>
+            </motion.div>
 
-            <div className="flex flex-col gap-4">
-                <div className="glass rounded-2xl flex-1 p-6 text-tertiary">
+            <motion.div variants={container} className="flex flex-col gap-4">
+                <motion.div variants={item} className="glass rounded-2xl flex-1 p-6 text-tertiary">
                     <h3 className="font-bold text-sm uppercase tracking-widest text-primary mb-4">Experience</h3>
 
                     <div className="space-y-4">
@@ -141,11 +157,12 @@ export default async function Home() {
                             </div>
                         ))}
                     </div>
-                </div>
+                </motion.div>
 
-                <div className="grid grid-cols-2 gap-4 flex-1">
+                <motion.div variants={container} className="grid grid-cols-2 gap-4 flex-1">
                     {SOCIALS.slice(0, 2).map((s) => (
-                        <a
+                        <motion.a
+                            variants={item}
                             key={s.id}
                             href={s.href}
                             target="_blank"
@@ -153,11 +170,11 @@ export default async function Home() {
                             className="glass rounded-2xl p-6 flex items-center justify-center text-2xl text-primary"
                         >
                             {s.icon}
-                        </a>
+                        </motion.a>
                     ))}
-                </div>
-            </div>
-        </div>
+                </motion.div>
+            </motion.div>
+        </motion.div>
     );
 }
 

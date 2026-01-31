@@ -1,21 +1,24 @@
 import { MdArrowOutward } from 'react-icons/md';
-import Link from 'next/link';
 import HighlightedSpan from '../components/HighlightedSpan';
 import { getProjects } from '@/lib/getProjects';
+import * as motion from 'motion/react-client';
+import { container, item } from '@/app/components/Transition';
 
 export default async function Projects() {
     const projects = await getProjects();
+
     return (
-        <div className="flex-1 flex flex-col gap-4">
-            <div className="text-center my-4">
+        <motion.div variants={container} initial="hidden" animate="visible" className="flex-1 flex flex-col gap-4">
+            <motion.div variants={item} className="text-center my-4">
                 <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
                     Project <HighlightedSpan>Portfolio</HighlightedSpan>
                 </h1>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <motion.div variants={container} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {projects.map((project) => (
-                    <Link
+                    <motion.a
+                        variants={item}
                         key={project.id || project.name}
                         href={project.link}
                         target="_blank"
@@ -32,10 +35,10 @@ export default async function Projects() {
                             </span>
                             <MdArrowOutward size={22} />
                         </div>
-                    </Link>
+                    </motion.a>
                 ))}
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 }
 
