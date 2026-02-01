@@ -7,7 +7,7 @@ export async function getProjects() {
 
     if (!db) return [];
 
-    const snap = await db.collection('projects').get();
+    const snap = await db.collection('projects').orderBy('position').get();
 
     return snap.docs.map((d) => {
         const data = d.data();
