@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { getResumeLink } from '@/lib/getResumeLink';
 import * as motion from 'motion/react-client';
 import { container, item } from '@/app/components/Transition';
+import EmailCard from '@/app/components/EmailCard';
 
 const EXPERIENCE = [
     {
@@ -47,7 +48,6 @@ const EXPERIENCE = [
 
 const SOCIALS = [
     { id: 'linkedin', href: 'https://linkedin.com/in/SakshhamTheCoder', icon: <FaLinkedin size={36} /> },
-    { id: 'email', href: 'mailto:sakshhamb28@gmail.com', icon: <FaEnvelope size={36} /> },
     { id: 'github', href: 'https://github.com/SakshhamTheCoder', icon: <FaGithub size={36} /> },
     { id: 'music', href: 'https://music.sakshham.tech', icon: <FaMusic size={36} /> },
 ];
@@ -73,7 +73,7 @@ export default async function Home() {
                 </motion.div>
 
                 <motion.div variants={container} className="grid grid-cols-2 gap-4 flex-1">
-                    {SOCIALS.slice(2, 4).map((s) => (
+                    {SOCIALS.slice(1, 3).map((s) => (
                         <motion.a
                             variants={item}
                             key={s.id}
@@ -160,7 +160,8 @@ export default async function Home() {
                 </motion.div>
 
                 <motion.div variants={container} className="grid grid-cols-2 gap-4 flex-1">
-                    {SOCIALS.slice(0, 2).map((s) => (
+                    <EmailCard email="sakshhamb28@gmail.com" />
+                    {SOCIALS.slice(0, 1).map((s) => (
                         <motion.a
                             variants={item}
                             key={s.id}
