@@ -3,7 +3,8 @@ export const ICONS = [
     'work', 'school', 'github', 'groups', 'google', 'music', 'code', 'terminal', 'cloud', 'devices', 'build', 'graph',
 ];
 
-const f = (name, type, extra = {}) => ({ name, label: extra.label || name, type, ...extra });
+const humanize = (n) => n.replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase());
+const f = (name, type, extra = {}) => ({ name, label: extra.label || humanize(name), type, ...extra });
 
 export const SCHEMAS = {
     projects: {
@@ -16,6 +17,7 @@ export const SCHEMAS = {
             f('link', 'url', { label: 'Source link' }),
             f('liveLink', 'url', { label: 'Live link' }),
             f('techStack', 'strings', { label: 'Tech stack (one per line)' }),
+            f('rank', 'number', { label: 'Rank on Projects page (1 = big card, empty = automatic)' }),
             f('featured', 'bool'),
             f('visible', 'bool'),
             f('status', 'enum', { options: ['active', 'maintained', 'ended'] }),
