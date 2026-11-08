@@ -21,9 +21,9 @@ export async function generateMetadata() {
         openGraph: {
             title: 'Sakshham Bhagat',
             description,
-            url: 'https://sakshham.tech',
+            url: 'https://sakshhamthecoder.vercel.app',
             site_name: 'Sakshham Bhagat',
-            images: [{ url: 'https://sakshham.tech/og-image.jpeg', alt: 'Sakshham Bhagat' }],
+            images: [{ url: 'https://sakshhamthecoder.vercel.app/og-image.jpeg', alt: 'Sakshham Bhagat' }],
         },
     };
 }
