@@ -1,86 +1,18 @@
-import {
-    MdCode,
-    MdSchool,
-    MdLocationPin,
-    MdTerminal,
-    MdCloud,
-    MdDevices,
-    MdMusicNote,
-    MdBuild,
-    MdAutoGraph,
-} from 'react-icons/md';
+import { MdCode, MdSchool, MdLocationPin, MdAutoGraph } from 'react-icons/md';
 import HighlightedSpan from '../components/HighlightedSpan';
 import * as motion from 'motion/react-client';
 import { container, item } from '@/app/components/Transition';
+import { getProfile, getSkills, getExperience, getAchievements } from '@/lib/content';
+import { formatRange } from '@/lib/format';
+import { Icon } from '@/lib/icons';
 
-const SKILLS = [
-    {
-        title: 'Languages',
-        icon: <MdTerminal />,
-        items: ['Python', 'JavaScript', 'Go', 'C/C++', 'Dart', 'SQL', 'Shell', 'HTML/CSS'],
-    },
-    {
-        title: 'Frameworks & Libraries',
-        icon: <MdCode />,
-        items: [
-            'React',
-            'Next.js',
-            'Flutter',
-            'Express',
-            'Django REST',
-            'FastAPI',
-            'Flask',
-            'TailwindCSS',
-            'React Native',
-        ],
-    },
-    {
-        title: 'Systems & Tooling',
-        icon: <MdAutoGraph />,
-        items: [
-            'Linux',
-            'Git & GitHub',
-            'Docker',
-            'NGINX',
-            'WebSockets',
-            'REST APIs',
-            'CLI / TUI',
-            'Android Debug Bridge',
-        ],
-    },
-    {
-        title: 'Databases',
-        icon: <MdDevices />,
-        items: ['PostgreSQL', 'MongoDB', 'MySQL', 'Firebase', 'Cloudinary'],
-    },
-    {
-        title: 'Cloud & Deployment',
-        icon: <MdCloud />,
-        items: ['Google Cloud Platform', 'Azure', 'Vercel', 'Netlify', 'Cloudflare'],
-    },
-    {
-        title: 'ML & Computer Vision',
-        icon: <MdAutoGraph />,
-        items: ['Generative AI', 'Scikit-Learn', 'MediaPipe', 'OpenCV', 'Pillow'],
-    },
-    {
-        title: 'Web APIs & Automation',
-        icon: <MdBuild />,
-        items: ['Postman', 'Insomnia', 'Selenium', 'BeautifulSoup', 'Payment Gateways', 'Discord Bots'],
-    },
-    {
-        title: 'Developer Environment',
-        icon: <MdTerminal />,
-        items: ['VS Code', 'Android Studio', 'PyCharm', 'IntelliJ', 'DataGrip', 'Jupyter Notebook', 'Google Colab'],
-    },
-    {
-        title: 'Creative Tools',
-        icon: <MdMusicNote />,
-        items: ['FL Studio', 'Figma', 'Canva', 'Clipchamp', 'LMMS', 'Audacity'],
-    },
-];
-
-export default function About() {
+export default async function About() {
+    const [profile, SKILLS, experience, achievements] = await Promise.all([
+        getProfile(),
+        getSkills(),
+        getExperience(),
+        getAchievements(),
+    ]);
     return (
         <motion.div variants={container} initial="hidden" animate="visible" className="flex-1 flex flex-col gap-6">
             <motion.div variants={item} className="px-2 text-center">
@@ -97,8 +29,15 @@ export default function About() {
                             <h4 className="font-bold">Education</h4>
                         </div>
                         <p className="text-sm leading-relaxed">
-                            B.E. in Computer Engineering from Thapar Institute of Engineering & Technology
+                            {profile.educationDegree} from {profile.educationSchool}
                         </p>
+                        {(profile.educationDates || profile.educationCgpa) && (
+                            <p className="text-xs opacity-70 mt-1">
+                                {[profile.educationDates, profile.educationCgpa && `CGPA ${profile.educationCgpa}`]
+                                    .filter(Boolean)
+                                    .join(' · ')}
+                            </p>
+                        )}
                     </motion.div>
 
                     <motion.div variants={item} className="glass rounded-2xl p-5 text-tertiary">
@@ -106,7 +45,7 @@ export default function About() {
                             <MdLocationPin />
                             <h4 className="font-bold">Location</h4>
                         </div>
-                        <p className="text-sm">Patiala, Punjab, India</p>
+                        <p className="text-sm">{profile.location}</p>
                     </motion.div>
 
                     <motion.div variants={item} className="glass rounded-2xl p-5 text-tertiary">
@@ -115,8 +54,7 @@ export default function About() {
                             <h4 className="font-bold">Primary Focus</h4>
                         </div>
                         <p className="text-sm leading-relaxed">
-                            I build web and mobile applications, along with the backend systems, APIs, databases, and
-                            tooling behind them
+                            {profile.focus}
                         </p>
                     </motion.div>
 
@@ -126,8 +64,7 @@ export default function About() {
                             <h4 className="font-bold">Technical Interests</h4>
                         </div>
                         <p className="text-sm leading-relaxed">
-                            I am interested in frontend architecture and user interface design, as well as backend
-                            systems, APIs, performance, and developer tooling
+                            {profile.interests}
                         </p>
                     </motion.div>
                 </motion.div>
@@ -137,9 +74,11 @@ export default function About() {
 
                     <motion.div variants={container} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                         {SKILLS.map((group) => (
-                            <motion.div key={group.title} variants={item}>
+                            <motion.div key={group.id} variants={item}>
                                 <div className="flex items-center gap-2 mb-3 text-primary">
-                                    <span className="text-lg">{group.icon}</span>
+                                    <span className="text-lg">
+                                        <Icon name={group.icon} />
+                                    </span>
                                     <h3 className="font-bold text-sm uppercase tracking-wide">{group.title}</h3>
                                 </div>
 
@@ -158,7 +97,55 @@ export default function About() {
                     </motion.div>
                 </motion.div>
             </motion.div>
+
+            {experience.length > 0 && (
+                <motion.div variants={item} className="glass-navbar rounded-2xl p-6 text-tertiary">
+                    <h2 className="text-lg font-bold text-primary mb-5">Experience</h2>
+                    <div className="flex flex-col gap-5">
+                        {experience.map((e) => (
+                            <div key={e.id} className="border-b border-tertiary/10 pb-4 last:border-b-0 last:pb-0">
+                                <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+                                    <h3 className="font-bold">
+                                        {e.org} <span className="font-normal text-sm">· {e.role}</span>
+                                    </h3>
+                                    <span className="text-xs opacity-70">{formatRange(e.startDate, e.endDate)}</span>
+                                </div>
+                                {e.bullets?.length > 0 && (
+                                    <ul className="list-disc ml-5 mt-2 text-sm space-y-1">
+                                        {e.bullets.map((b) => (
+                                            <li key={b}>{b}</li>
+                                        ))}
+                                    </ul>
+                                )}
+                                {e.skills?.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mt-2">
+                                        {e.skills.map((k) => (
+                                            <span key={k} className="text-xs px-3 py-1 rounded-full border border-tertiary/20">
+                                                {k}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </motion.div>
+            )}
+
+            {achievements.length > 0 && (
+                <motion.div variants={item} className="glass-navbar rounded-2xl p-6 text-tertiary">
+                    <h2 className="text-lg font-bold text-primary mb-5">Achievements & Certifications</h2>
+                    <ul className="space-y-2 text-sm">
+                        {achievements.map((a) => (
+                            <li key={a.id}>
+                                <span className="font-bold">{a.title}</span>
+                                {a.detail && <span> · {a.detail}</span>}
+                                {a.date && <span className="opacity-70"> · {a.date}</span>}
+                            </li>
+                        ))}
+                    </ul>
+                </motion.div>
+            )}
         </motion.div>
     );
 }
-
