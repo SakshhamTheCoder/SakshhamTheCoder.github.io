@@ -2,6 +2,7 @@ import { MdArrowOutward } from 'react-icons/md';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getResumeLink, getProfile, getExperience, getNow } from '@/lib/content';
+import { getContributions } from '@/lib/github';
 import { formatRange } from '@/lib/format';
 import { Icon, SOCIAL_ICONS } from '@/lib/icons';
 import { FaGlobe } from 'react-icons/fa';
@@ -12,15 +13,16 @@ import ContributionChart from '@/app/components/ContributionChart';
 
 const socialIcon = (id) => {
     const C = SOCIAL_ICONS[id] || FaGlobe;
-    return <C size={36} />;
+    return <C size={28} />;
 };
 
 export default async function Home() {
-    const [resumeLink, profile, allExperience, now] = await Promise.all([
+    const [resumeLink, profile, allExperience, now, cal] = await Promise.all([
         getResumeLink(),
         getProfile(),
         getExperience(),
         getNow(),
+        getContributions(),
     ]);
     const experience = allExperience.filter((e) => e.showOnHome).slice(0, 6);
     const socials = profile.socials || [];
@@ -31,12 +33,12 @@ export default async function Home() {
             variants={container}
             initial="hidden"
             animate="visible"
-            className="flex-1 grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-[1fr_auto] gap-4"
+            className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-[minmax(0,1fr)_auto] gap-4"
         >
-            <motion.div variants={container} className="flex flex-col gap-4">
-                <motion.div variants={item} className="glass rounded-2xl p-6 flex flex-1 items-center">
-                    <div className="flex flex-col gap-3 md:items-end">
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl text-balance font-bold md:text-end text-primary leading-tight text-center">
+            <motion.div variants={container} className="flex flex-col gap-4 min-h-0">
+                <motion.div variants={item} className="glass rounded-2xl p-6 flex flex-1 min-h-0 items-center">
+                    <div className="flex flex-col gap-3 md:items-end w-full">
+                        <h1 className="text-3xl sm:text-4xl lg:text-[clamp(2rem,6.4vh,3.75rem)] text-balance font-bold md:text-end text-primary leading-tight text-center">
                             <span className="text-tertiary"> I am a </span>
                             {(profile.heroLine || 'Developer & Music Producer').split('&').map((part, i) => (
                                 <span key={i}>
@@ -44,38 +46,24 @@ export default async function Home() {
                                     {part.trim()}
                                 </span>
                             ))}
-                        </h2>
+                        </h1>
                         {now && <p className="text-sm text-tertiary italic text-center md:text-end">Now: {now}</p>}
                     </div>
                 </motion.div>
 
-                <motion.div variants={container} className="grid grid-cols-2 gap-4 flex-1">
-                    {socials.slice(1, 3).map((s) => (
-                        <motion.a
-                            variants={item}
-                            key={s.id}
-                            href={s.href}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="glass rounded-2xl p-6 flex items-center justify-center text-2xl text-primary"
-                        >
-                            {socialIcon(s.id)}
-                        </motion.a>
-                    ))}
-                </motion.div>
-                <motion.div variants={item} className="glass rounded-2xl p-6 text-tertiary group">
-                    <Link href="/about">
-                        <div className="flex items-center justify-between mb-3">
-                            <span className="text-2xl font-serif italic">About</span>
-                            <MdArrowOutward size={28} className="text-primary" />
+                <motion.div variants={item}>
+                    <Link href="/about" className="glass glass-link rounded-2xl p-5 text-tertiary block">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="tile-label">About</span>
+                            <MdArrowOutward size={28} className="text-primary" aria-hidden="true" />
                         </div>
-                        <p className="text-md">
+                        <p className="text-base">
                             {after === undefined ? (
                                 before
                             ) : (
                                 <>
                                     {before}
-                                    <span className="italic mx-1 text-primary">{profile.aboutHighlight}</span>
+                                    <span className="italic text-accent">{profile.aboutHighlight}</span>
                                     {after}
                                 </>
                             )}
@@ -84,87 +72,85 @@ export default async function Home() {
                 </motion.div>
             </motion.div>
 
-            <motion.div variants={container} className="flex flex-col gap-4">
-                <motion.div
-                    variants={item}
-                    className="glass rounded-2xl relative overflow-hidden aspect-4/3 lg:aspect-auto flex-1"
-                >
+            <motion.div variants={container} className="flex flex-col gap-4 min-h-0">
+                <motion.div variants={item} className="glass rounded-2xl relative overflow-hidden aspect-4/3 lg:aspect-auto flex-1 min-h-0">
                     <Image
                         src="https://avatars.githubusercontent.com/u/74554569?v=4"
                         alt="Sakshham"
                         fill
+                        sizes="(min-width: 1024px) 33vw, 100vw"
                         className="object-cover"
                         priority
                     />
                 </motion.div>
 
-                <motion.a
-                    variants={item}
-                    href={resumeLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="glass rounded-2xl p-6 flex items-center justify-between gap-4 text-tertiary"
-                >
-                    <span className="text-4xl font-serif italic">Resume</span>
-                    <MdArrowOutward size={28} className="text-primary" />
-                </motion.a>
-
-                <motion.div variants={item}>
-                    <Link
-                        href="/projects"
-                        className="glass rounded-2xl p-6 flex justify-between items-center text-tertiary"
+                <div className="grid grid-cols-2 gap-4">
+                    <motion.a
+                        variants={item}
+                        href={resumeLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="glass glass-link rounded-2xl p-5 flex items-center justify-between gap-2"
                     >
-                        <span className="text-4xl font-serif italic">Projects</span>
-                        <MdArrowOutward size={28} className="text-primary" />
-                    </Link>
-                </motion.div>
+                        <span className="tile-label">Resume</span>
+                        <MdArrowOutward size={26} className="text-primary shrink-0" aria-hidden="true" />
+                    </motion.a>
+                    <motion.div variants={item}>
+                        <Link href="/projects" className="glass glass-link rounded-2xl p-5 flex items-center justify-between gap-2">
+                            <span className="tile-label">Projects</span>
+                            <MdArrowOutward size={26} className="text-primary shrink-0" aria-hidden="true" />
+                        </Link>
+                    </motion.div>
+                </div>
             </motion.div>
 
-            <motion.div variants={container} className="flex flex-col gap-4">
-                <motion.div variants={item} className="glass rounded-2xl flex-1 p-6 text-tertiary">
-                    <h3 className="font-bold text-sm uppercase tracking-widest text-primary mb-4">Experience</h3>
-
-                    <div className="space-y-4">
-                        {experience.map((area) => (
-                            <div key={area.id} className="border-b border-tertiary/10 pb-3 last:border-b-0 last:pb-0">
-                                <div className="flex gap-3">
-                                    <div className="text-primary self-center text-xl">
-                                        <Icon name={area.icon} />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-bold">{area.org}</h4>
-                                        <p className="text-sm">{area.role}</p>
-                                        {formatRange(area.startDate, area.endDate) && (
-                                            <p className="text-xs opacity-70">{formatRange(area.startDate, area.endDate)}</p>
-                                        )}
-                                    </div>
+            <motion.div variants={item} className="glass rounded-2xl p-6 text-tertiary flex flex-col min-h-0">
+                <h2 className="tile-title mb-4">Experience</h2>
+                <div className="flex flex-1 min-h-0 flex-col justify-between gap-3">
+                    {experience.map((area) => (
+                        <div key={area.id} className="flex items-center gap-3 border-b border-tertiary/10 pb-3 last:border-b-0 last:pb-0">
+                            <span className="text-primary text-xl shrink-0" aria-hidden="true">
+                                <Icon name={area.icon} />
+                            </span>
+                            <div className="min-w-0 flex-1">
+                                <div className="flex items-baseline justify-between gap-3">
+                                    <h3 className="font-bold">{area.org}</h3>
+                                    <span className="text-xs text-tertiary/80 whitespace-nowrap">
+                                        {formatRange(area.startDate, area.endDate)}
+                                    </span>
                                 </div>
+                                <p className="text-sm line-clamp-2">{area.role}</p>
                             </div>
-                        ))}
-                    </div>
-                </motion.div>
-
-                <motion.div variants={container} className="grid grid-cols-2 gap-4 flex-1">
-                    <EmailCard email={profile.email} />
-                    {socials.slice(0, 1).map((s) => (
-                        <motion.a
-                            variants={item}
-                            key={s.id}
-                            href={s.href}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="glass rounded-2xl p-6 flex items-center justify-center text-2xl text-primary"
-                        >
-                            {socialIcon(s.id)}
-                        </motion.a>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
             </motion.div>
 
-            <motion.div variants={item} className="lg:col-span-3 empty:hidden">
-                <ContributionChart />
+            {cal && (
+                <motion.div variants={item} className="lg:col-span-2">
+                    <ContributionChart cal={cal} />
+                </motion.div>
+            )}
+
+            <motion.div
+                variants={container}
+                className={`grid grid-cols-2 gap-4 ${cal ? '' : 'lg:col-span-3 lg:grid-cols-4'}`}
+            >
+                {socials.map((s) => (
+                    <motion.a
+                        variants={item}
+                        key={s.id}
+                        href={s.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={s.id}
+                        className="glass glass-link rounded-2xl p-4 flex items-center justify-center text-primary"
+                    >
+                        {socialIcon(s.id)}
+                    </motion.a>
+                ))}
+                <EmailCard email={profile.email} />
             </motion.div>
         </motion.div>
     );
 }
-
