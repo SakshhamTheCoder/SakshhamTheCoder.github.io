@@ -65,8 +65,9 @@ export async function saveAction(name, id, data) {
         if (isNew) {
             if (name === 'projects') doc.createdAt = FieldValue.serverTimestamp();
             if (schema.list && doc.position === undefined) {
-                const top = await db.collection(name).orderBy('position').limit(1).get();
-                doc.position = (top.docs[0]?.data().position ?? 1) - 1;
+                const top = schema.addAt === 'top';
+                const edge = await db.collection(name).orderBy('position', top ? 'asc' : 'desc').limit(1).get();
+                doc.position = (edge.docs[0]?.data().position ?? 0) + (top ? -1 : 1);
             }
             await ref.set(doc);
         } else {
@@ -91,17 +92,25 @@ export async function deleteAction(name, id) {
     }
 }
 
-export async function moveAction(name, id, dir) {
+// ids = every doc id in the new order; positions become 1..n.
+export async function reorderAction(name, ids) {
     try {
         await guard(name);
-        const items = await sorted(name);
-        const i = items.findIndex((x) => x.id === id);
-        const j = i + (dir === 'up' ? -1 : 1);
-        if (i < 0 || j < 0 || j >= items.length) return { ok: true };
-        [items[i], items[j]] = [items[j], items[i]];
+        if (!Array.isArray(ids) || ids.some((x) => typeof x !== 'string')) throw new Error('Invalid order');
         const batch = db.batch();
-        items.forEach((x, n) => batch.update(db.collection(name).doc(x.id), { position: n + 1 }));
+        ids.forEach((id, n) => batch.update(db.collection(name).doc(id), { position: n + 1 }));
         await batch.commit();
+        updateTag(name);
+        return { ok: true };
+    } catch (e) {
+        return { error: e.message };
+    }
+}
+
+export async function setVisibleAction(name, id, visible) {
+    try {
+        await guard(name);
+        await db.collection(name).doc(id).update({ visible: Boolean(visible), updatedAt: FieldValue.serverTimestamp() });
         updateTag(name);
         return { ok: true };
     } catch (e) {

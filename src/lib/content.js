@@ -33,15 +33,11 @@ const byPos = (a, b) => (a.position ?? 1e9) - (b.position ?? 1e9);
 const visible = (x) => x.visible !== false;
 
 export async function getProjects() {
-    return (await safe('projects'))
-        .filter(visible)
-        .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || byPos(a, b));
+    return (await safe('projects')).filter(visible).sort(byPos);
 }
 
 export async function getExperience() {
-    return (await safe('experience'))
-        .filter(visible)
-        .sort((a, b) => (b.startDate || '').localeCompare(a.startDate || '') || byPos(a, b));
+    return (await safe('experience')).filter(visible).sort(byPos);
 }
 
 export async function getSkills() {
