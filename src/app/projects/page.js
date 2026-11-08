@@ -30,7 +30,7 @@ function Card({ project, stars, size, cls }) {
                         {project.name}
                     </h2>
                     <div className="flex items-center gap-2 shrink-0 text-xs pt-1">
-                        {stars != null && <span aria-label={`${stars} stars`}>★ {stars}</span>}
+                        {stars > 0 && <span aria-label={`${stars} stars`}>★ {stars}</span>}
                         {project.status && size !== 'small' && (
                             <span className="px-2 py-0.5 rounded-full border border-primary/50 text-accent">{project.status}</span>
                         )}
