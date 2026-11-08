@@ -20,8 +20,8 @@ const Navbar = ({ resumeLink }) => {
     };
 
     return (
-        <nav className="sticky top-4 z-50">
-            <div className="glass-navbar rounded-2xl px-6 py-4 relative">
+        <nav aria-label="Main" className="sticky top-0 z-50">
+            <div className="glass rounded-2xl px-6 py-3 relative">
                 <div className="flex items-center justify-between">
                     <Link href="/" className="text-2xl font-bold text-primary">
                         Sakshham Bhagat
@@ -33,7 +33,7 @@ const Navbar = ({ resumeLink }) => {
                                 key={link.href}
                                 href={link.href}
                                 className={`transition-colors ${
-                                    isActive(link.href) ? 'text-primary' : 'text-tertiary hover:text-primary'
+                                    isActive(link.href) ? 'text-accent' : 'text-tertiary hover:text-accent'
                                 }`}
                             >
                                 {link.label}
@@ -45,14 +45,19 @@ const Navbar = ({ resumeLink }) => {
                                 href={resumeLink}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-tertiary hover:text-primary transition-colors"
+                                className="text-tertiary hover:text-accent transition-colors"
                             >
                                 RESUME
                             </a>
                         )}
                     </div>
 
-                    <button className="md:hidden text-primary text-2xl" onClick={() => setOpen(!open)}>
+                    <button
+                        className="md:hidden text-accent text-3xl p-1 -mr-1"
+                        aria-label={open ? 'Close menu' : 'Open menu'}
+                        aria-expanded={open}
+                        onClick={() => setOpen(!open)}
+                    >
                         {open ? <MdClose /> : <MdMenu />}
                     </button>
                 </div>
@@ -67,7 +72,7 @@ const Navbar = ({ resumeLink }) => {
                                 href={link.href}
                                 onClick={() => setOpen(false)}
                                 className={`transition-colors ${
-                                    isActive(link.href) ? 'text-primary' : 'text-tertiary hover:text-primary'
+                                    isActive(link.href) ? 'text-accent' : 'text-tertiary hover:text-accent'
                                 }`}
                             >
                                 {link.label}
@@ -80,7 +85,7 @@ const Navbar = ({ resumeLink }) => {
                                 target="_blank"
                                 rel="noreferrer"
                                 onClick={() => setOpen(false)}
-                                className="text-tertiary hover:text-primary transition-colors"
+                                className="text-tertiary hover:text-accent transition-colors"
                             >
                                 RESUME
                             </a>

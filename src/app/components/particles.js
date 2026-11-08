@@ -5,7 +5,7 @@ export const particleConfig = {
         zIndex: -1,
     },
     detectRetina: true,
-    fpsLimit: 90,
+    fpsLimit: 60,
     interactivity: {
         events: {
             onClick: {
