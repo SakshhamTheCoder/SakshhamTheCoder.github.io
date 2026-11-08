@@ -34,3 +34,14 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Content admin setup
+
+All site content (projects, experience, skills, achievements, profile, "Now") lives in Firestore and is edited at `/admin`.
+
+1. Firebase console: Authentication, enable Email/Password, add one user, copy the project web API key.
+2. Env (Vercel and local `.env`): `FIREBASE_CONFIG` (existing), `FIREBASE_WEB_API_KEY`, `ADMIN_EMAIL` (that user's email), `GITHUB_TOKEN` (read-only, no scopes; powers the contribution chart and live project stars).
+3. Seed once: `node --env-file=.env scripts/seed/seed.js` (dry run), then add `--apply`. Re-runs are safe. Review hidden items in `/admin` and flip them visible.
+4. GitHub profile settings: choose whether to include private contributions in the chart.
+
+Saving in `/admin` clears the affected cache tag immediately. Edits made directly in the Firebase console appear within about a day.
