@@ -37,3 +37,6 @@ next-env.d.ts
 
 .env*
 addProject.js
+# local only
+/scripts/
+/docs/

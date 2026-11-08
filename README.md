@@ -40,7 +40,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 All site content (projects, experience, skills, achievements, profile, "Now") lives in Firestore and is edited at `/admin`.
 
 1. Env (Vercel and local `.env`): `FIREBASE_CONFIG` (existing service account, base64), `ADMIN_PASSWORD` (any strong password; the `/admin` login), `GITHUB_TOKEN` (optional; classic token, no scopes; powers the contribution chart. Live project stars work without it).
-2. Seed once: `node --env-file=.env scripts/seed/seed.js` (dry run), then add `--apply`. Re-runs are safe. Review hidden items in `/admin` and flip them visible.
+2. Seed once (local script, not committed): `node --env-file=.env scripts/seed/seed.js` (dry run), then add `--apply`. Re-runs are safe. Review hidden items in `/admin` and flip them visible.
 3. GitHub profile settings: choose whether to include private contributions in the chart.
 
 Saving in `/admin` clears the affected cache tag immediately. Edits made directly in the Firebase console appear within about a day.
