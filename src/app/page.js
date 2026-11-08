@@ -75,7 +75,7 @@ export default async function Home() {
             <motion.div variants={container} className="flex flex-col gap-4 min-h-0">
                 <motion.div variants={item} className="glass rounded-2xl relative overflow-hidden aspect-4/3 lg:aspect-auto flex-1 min-h-0">
                     <Image
-                        src="https://avatars.githubusercontent.com/u/74554569?v=4"
+                        src="/avatar.webp"
                         alt="Sakshham"
                         fill
                         sizes="(min-width: 1024px) 33vw, 100vw"

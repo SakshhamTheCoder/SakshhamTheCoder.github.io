@@ -6,7 +6,7 @@ import { getResumeLink, getProfile } from '@/lib/content';
 
 const firaSans = Fira_Sans({
     subsets: ['latin'],
-    weight: ['400', '500', '700'],
+    weight: ['400', '700'],
 });
 
 export async function generateMetadata() {
