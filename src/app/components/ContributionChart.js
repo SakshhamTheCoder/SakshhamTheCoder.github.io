@@ -14,37 +14,37 @@ export default function ContributionChart({ cal }) {
             aria-label={`${cal.totalContributions} contributions on GitHub in the last year`}
         >
             <div className="flex items-center justify-between gap-4">
-                <h3 className="tile-title">{cal.totalContributions.toLocaleString()} contributions in the last year</h3>
-                <div className="flex items-center gap-4 text-xs">
-                    <span className="hidden sm:flex items-center gap-1" aria-hidden="true">
-                        Less
-                        {LEVELS.map((c) => (
-                            <span key={c} className={`size-2.5 rounded-xs ${c}`} />
-                        ))}
-                        More
-                    </span>
-                    <a
-                        href="https://github.com/SakshhamTheCoder"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-1 text-accent"
-                    >
-                        GitHub <MdArrowOutward />
-                    </a>
-                </div>
+                <h3 className="tile-title tabular-nums">{cal.totalContributions.toLocaleString()} contributions in the last year</h3>
+                <a
+                    href="https://github.com/SakshhamTheCoder"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-1 text-xs text-accent"
+                >
+                    GitHub <MdArrowOutward className="link-arrow" />
+                </a>
             </div>
-            <div className="max-lg:overflow-x-auto">
-                <div className="grid grid-flow-col grid-rows-7 gap-0.75 auto-cols-fr max-lg:min-w-160">
-                    {cal.weeks.flatMap((w) =>
+            <div className="max-lg:overflow-x-auto flex-1 flex items-center">
+                <div className="grid grid-flow-col grid-rows-7 gap-0.75 auto-cols-fr w-full max-lg:min-w-160">
+                    {cal.weeks.flatMap((w, wi) =>
                         w.contributionDays.map((d) => (
                             <div
                                 key={d.date}
                                 data-tip={`${d.contributionCount} on ${d.date}`}
+                                style={{ '--w': wi }}
                                 className={`chart-cell ${LEVELS[level(d.contributionCount)]}`}
                             />
                         ))
                     )}
                 </div>
+            </div>
+            {/* The legend sits under the grid, so the tile reads top (title), middle (data), bottom (key). */}
+            <div className="flex items-center justify-end gap-1 text-xs" aria-hidden="true">
+                Less
+                {LEVELS.map((c) => (
+                    <span key={c} className={`size-2.5 rounded-xs ${c}`} />
+                ))}
+                More
             </div>
         </div>
     );
