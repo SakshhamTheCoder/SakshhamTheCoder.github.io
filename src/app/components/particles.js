@@ -39,7 +39,7 @@ export const particleConfig = {
     },
     particles: {
         color: {
-            value: '#c49d9d',
+            value: '#b6ae9a',
         },
         move: {
             angle: {
@@ -120,7 +120,7 @@ export const particleConfig = {
         links: {
             blink: false,
             color: {
-                value: '#c49d9d',
+                value: '#b6ae9a',
             },
             consent: false,
             distance: 300,
