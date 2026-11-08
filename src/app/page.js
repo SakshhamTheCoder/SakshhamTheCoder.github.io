@@ -2,7 +2,7 @@ import { MdArrowOutward } from 'react-icons/md';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getResumeLink, getProfile, getExperience, getNow } from '@/lib/content';
-import { getContributions } from '@/lib/github';
+import { getContributions, getPullRequests } from '@/lib/github';
 import { formatRange } from '@/lib/format';
 import { Icon, SOCIAL_ICONS } from '@/lib/icons';
 import { FaGlobe } from 'react-icons/fa';
@@ -10,19 +10,21 @@ import * as motion from 'motion/react-client';
 import { container, item } from '@/app/components/Transition';
 import EmailCard from '@/app/components/EmailCard';
 import ContributionChart from '@/app/components/ContributionChart';
+import PullRequests from '@/app/components/PullRequests';
 
 const socialIcon = (id) => {
     const C = SOCIAL_ICONS[id] || FaGlobe;
-    return <C size={28} />;
+    return <C size="1.5rem" />;
 };
 
 export default async function Home() {
-    const [resumeLink, profile, allExperience, now, cal] = await Promise.all([
+    const [resumeLink, profile, allExperience, now, cal, prs] = await Promise.all([
         getResumeLink(),
         getProfile(),
         getExperience(),
         getNow(),
         getContributions(),
+        getPullRequests(),
     ]);
     const experience = allExperience.filter((e) => e.showOnHome).slice(0, 6);
     const socials = profile.socials || [];
@@ -55,7 +57,7 @@ export default async function Home() {
                     <Link href="/about" className="glass glass-link rounded-2xl p-5 text-tertiary block">
                         <div className="flex items-center justify-between mb-2">
                             <span className="tile-label">About</span>
-                            <MdArrowOutward size={28} className="text-primary" aria-hidden="true" />
+                            <MdArrowOutward size="1.75rem" className="text-primary" aria-hidden="true" />
                         </div>
                         <p className="text-base">
                             {after === undefined ? (
@@ -93,28 +95,45 @@ export default async function Home() {
                         className="glass glass-link rounded-2xl p-5 flex items-center justify-between gap-2"
                     >
                         <span className="tile-label">Resume</span>
-                        <MdArrowOutward size={26} className="text-primary shrink-0" aria-hidden="true" />
+                        <MdArrowOutward size="1.625rem" className="text-primary shrink-0" aria-hidden="true" />
                     </motion.a>
                     <motion.div variants={item}>
                         <Link href="/projects" className="glass glass-link rounded-2xl p-5 flex items-center justify-between gap-2">
                             <span className="tile-label">Projects</span>
-                            <MdArrowOutward size={26} className="text-primary shrink-0" aria-hidden="true" />
+                            <MdArrowOutward size="1.625rem" className="text-primary shrink-0" aria-hidden="true" />
                         </Link>
                     </motion.div>
                 </div>
+
+                <motion.div variants={container} className="grid grid-cols-4 gap-4">
+                    {socials.map((sc) => (
+                        <motion.a
+                            variants={item}
+                            key={sc.id}
+                            href={sc.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label={sc.id}
+                            className="glass glass-link rounded-2xl py-3 flex items-center justify-center text-primary"
+                        >
+                            {socialIcon(sc.id)}
+                        </motion.a>
+                    ))}
+                    <EmailCard email={profile.email} />
+                </motion.div>
             </motion.div>
 
-            <motion.div variants={item} className="glass rounded-2xl p-6 text-tertiary flex flex-col min-h-0">
-                <h2 className="tile-title mb-4">Experience</h2>
-                <div className="flex flex-1 min-h-0 flex-col justify-between gap-3">
+            <motion.div variants={item} className="glass rounded-2xl p-5 text-tertiary flex flex-col min-h-0">
+                <h2 className="tile-title mb-3">Experience</h2>
+                <div className="flex flex-1 min-h-0 flex-col justify-between gap-2">
                     {experience.map((area) => (
-                        <div key={area.id} className="flex items-center gap-3 border-b border-tertiary/10 pb-3 last:border-b-0 last:pb-0">
+                        <div key={area.id} className="flex items-center gap-3 border-b border-tertiary/10 pb-2 last:border-b-0 last:pb-0">
                             <span className="text-primary text-xl shrink-0" aria-hidden="true">
                                 <Icon name={area.icon} />
                             </span>
                             <div className="min-w-0 flex-1">
                                 <div className="flex items-baseline justify-between gap-3">
-                                    <h3 className="font-bold">{area.org}</h3>
+                                    <h3 className="font-bold truncate">{area.org}</h3>
                                     <span className="text-xs text-tertiary/80 whitespace-nowrap">
                                         {formatRange(area.startDate, area.endDate)}
                                     </span>
@@ -127,30 +146,17 @@ export default async function Home() {
             </motion.div>
 
             {cal && (
-                <motion.div variants={item} className="lg:col-span-2">
+                <motion.div variants={item} className="lg:col-span-2 lg:min-h-[12.5rem] flex flex-col [&>*]:flex-1">
                     <ContributionChart cal={cal} />
                 </motion.div>
             )}
 
-            <motion.div
-                variants={container}
-                className={`grid grid-cols-2 gap-4 ${cal ? '' : 'lg:col-span-3 lg:grid-cols-4'}`}
-            >
-                {socials.map((s) => (
-                    <motion.a
-                        variants={item}
-                        key={s.id}
-                        href={s.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={s.id}
-                        className="glass glass-link rounded-2xl p-4 flex items-center justify-center text-primary"
-                    >
-                        {socialIcon(s.id)}
-                    </motion.a>
-                ))}
-                <EmailCard email={profile.email} />
-            </motion.div>
+            {/* Sized by the chart beside it; the list inside is clipped rather than allowed to push the row taller. */}
+            {prs.length > 0 && (
+                <motion.div variants={item} className={`relative min-h-0 lg:min-h-[12.5rem] ${cal ? '' : 'lg:col-span-3'}`}>
+                    <PullRequests prs={prs} />
+                </motion.div>
+            )}
         </motion.div>
     );
 }

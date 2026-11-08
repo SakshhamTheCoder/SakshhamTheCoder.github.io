@@ -17,9 +17,9 @@ export default function EmailCard({ email }) {
                 aria-label="Email"
                 aria-haspopup="dialog"
                 onClick={() => setOpen(true)}
-                className="glass glass-link rounded-2xl p-4 flex items-center justify-center text-primary cursor-pointer"
+                className="glass glass-link rounded-2xl py-3 flex items-center justify-center text-primary cursor-pointer"
             >
-                <FaEnvelope size={28} />
+                <FaEnvelope size="1.5rem" />
             </motion.button>
 
             {open && <EmailModal email={email} onClose={() => setOpen(false)} />}
