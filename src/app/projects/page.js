@@ -3,20 +3,11 @@ import { getProjects } from '@/lib/content';
 import { getStars } from '@/lib/github';
 import * as motion from 'motion/react-client';
 import { container, item } from '@/app/components/Transition';
+import { PROJECT_SLOTS } from '@/lib/schema';
 
-// Bento slots, in rank order, on a 9-column x 4-row grid (lg+). Sizes echo the layout sketch:
-// one big card beside a stack of two, a row of three, then a ragged last row.
-const SLOTS = [
-    { size: 'large', cls: 'lg:col-span-6 lg:row-span-2' },
-    { size: 'small', cls: 'lg:col-span-3' },
-    { size: 'small', cls: 'lg:col-span-3' },
-    { size: 'medium', cls: 'lg:col-span-3' },
-    { size: 'medium', cls: 'lg:col-span-3' },
-    { size: 'medium', cls: 'lg:col-span-3' },
-    { size: 'medium', cls: 'lg:col-span-4' },
-    { size: 'small', cls: 'lg:col-span-2' },
-    { size: 'small', cls: 'lg:col-span-3' },
-];
+// Grid placement per slot (9-column x 3.4-row grid on lg+). Sizes come from PROJECT_SLOTS, which admin shows too.
+const SIZE = PROJECT_SLOTS;
+const CLS = ['lg:col-span-5 lg:row-span-2', 'lg:col-span-4', 'lg:col-span-4', ...Array(6).fill('lg:col-span-3')];
 
 const MAX_TECH = { large: 8, medium: 4, small: 0 };
 const DESC_CLAMP = { large: 'line-clamp-6 font-serif italic text-2xl leading-snug', medium: 'line-clamp-3 text-sm', small: 'line-clamp-2 text-sm' };
@@ -27,7 +18,7 @@ function Card({ project, stars, size, cls }) {
     return (
         <motion.article
             variants={item}
-            className={`glass rounded-2xl p-5 flex flex-col justify-between gap-3 relative min-h-0 overflow-hidden ${project.link ? 'glass-link' : ''} ${cls}`}
+            className={`glass rounded-2xl ${size === 'small' ? 'p-4' : 'p-5'} flex flex-col justify-between gap-2 relative min-h-0 overflow-hidden ${project.link ? 'glass-link' : ''} ${cls}`}
         >
             {project.link && (
                 <a href={project.link} target="_blank" rel="noreferrer" className="absolute inset-0 z-10 rounded-2xl" aria-label={`View source for ${project.name}`} />
@@ -35,7 +26,7 @@ function Card({ project, stars, size, cls }) {
 
             <div className="pointer-events-none min-h-0">
                 <div className="flex items-start justify-between gap-2 mb-1.5">
-                    <h2 className={`font-bold leading-snug text-primary ${size === 'large' ? 'text-3xl' : size === 'medium' ? 'text-lg' : 'text-base line-clamp-1'}`}>
+                    <h2 className={`font-bold leading-snug text-primary ${size === 'large' ? 'text-3xl' : size === 'medium' ? 'text-xl' : 'text-base line-clamp-1'}`}>
                         {project.name}
                     </h2>
                     <div className="flex items-center gap-2 shrink-0 text-xs pt-1">
@@ -84,28 +75,20 @@ export default async function Projects() {
     const liveStars = await getStars(projects.map((p) => p.githubRepo).filter(Boolean));
     const stars = Object.fromEntries(projects.map((p) => [p.id, liveStars[p.githubRepo] ?? p.stars ?? null]));
 
-    // Order: projects with a rank (set in admin) first, lowest rank first. The rest follow automatically:
-    // featured, then stars, then has a live site, then newest. Stable, so ties keep admin order.
-    const ranked = [...projects].sort(
-        (a, b) =>
-            (a.rank ?? 1e9) - (b.rank ?? 1e9) ||
-            Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
-            (stars[b.id] ?? 0) - (stars[a.id] ?? 0) ||
-            Number(Boolean(b.liveLink)) - Number(Boolean(a.liveLink)) ||
-            (b.startedAt || '').localeCompare(a.startedAt || '')
-    );
-    const shown = ranked.slice(0, SLOTS.length);
-    const archive = ranked.slice(SLOTS.length);
+    // Order is the admin list order (position), nothing automatic.
+    const ranked = projects;
+    const shown = ranked.slice(0, SIZE.length);
+    const archive = ranked.slice(SIZE.length);
 
     return (
         <motion.div variants={container} initial="hidden" animate="visible" className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-4">
             <h1 className="sr-only">Projects</h1>
             <motion.div
                 variants={container}
-                className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-9 lg:grid-rows-4 gap-4 min-h-0 ${archive.length ? 'lg:col-span-9' : 'lg:col-span-12'}`}
+                className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-9 lg:grid-rows-[1fr_1fr_0.7fr_0.7fr] gap-4 min-h-0 ${archive.length ? 'lg:col-span-9' : 'lg:col-span-12'}`}
             >
                 {shown.map((p, i) => (
-                    <Card key={p.id || p.name} project={p} stars={stars[p.id]} size={SLOTS[i].size} cls={`${SLOTS[i].cls} ${i === 0 ? 'sm:col-span-2' : ''}`} />
+                    <Card key={p.id || p.name} project={p} stars={stars[p.id]} size={SIZE[i]} cls={`${CLS[i]} ${i === 0 ? 'sm:col-span-2' : ''}`} />
                 ))}
             </motion.div>
 
