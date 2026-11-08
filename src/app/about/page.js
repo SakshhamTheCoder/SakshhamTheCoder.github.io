@@ -19,7 +19,7 @@ function Award({ a }) {
     );
 }
 
-// Certification: "Org: Certificate name (year)". Write the title as "Org: Name" in admin and put the year in Date.
+// Certification: "Org: Certificate name · year". Write the title as "Org: Name" in admin and put the year in Date.
 function Cert({ a }) {
     const i = a.title.indexOf(': ');
     const org = i > 0 ? a.title.slice(0, i + 1) : '';
@@ -28,7 +28,7 @@ function Cert({ a }) {
         <>
             {org && <span className="font-bold">{org} </span>}
             <span>{name}</span>
-            {a.date && <span className="text-tertiary/80"> ({a.date})</span>}
+            {a.date && <span className="text-tertiary/80"> · {a.date}</span>}
         </>
     );
 }
