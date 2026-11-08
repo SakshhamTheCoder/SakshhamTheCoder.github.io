@@ -1,4 +1,4 @@
-import { Fira_Sans, Source_Serif_4 } from 'next/font/google';
+import { Fira_Sans } from 'next/font/google';
 import './globals.css';
 import BodyLayout from '@/app/components/BodyLayout';
 import ParticlesBackground from '@/app/components/ParticlesBackground';
@@ -7,13 +7,6 @@ import { getResumeLink, getProfile } from '@/lib/content';
 const firaSans = Fira_Sans({
     subsets: ['latin'],
     weight: ['400', '500', '700'],
-});
-
-const serif = Source_Serif_4({
-    subsets: ['latin'],
-    style: ['italic'],
-    weight: ['400'],
-    variable: '--font-serif-loaded',
 });
 
 export async function generateMetadata() {
@@ -42,7 +35,7 @@ export default async function RootLayout({ children }) {
             <meta name="theme-color" content="#DA0037" />
             <meta name="msapplication-TileColor" content="#DA0037" />
             <meta name="msapplication-navbutton-color" content="#DA0037" />
-            <body className={`${firaSans.className} ${serif.variable} select-none`}>
+            <body className={firaSans.className + ' select-none'}>
                 <ParticlesBackground>
                     <BodyLayout resumeLink={resumeLink}>{children}</BodyLayout>
                 </ParticlesBackground>

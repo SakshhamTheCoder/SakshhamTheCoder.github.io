@@ -6,7 +6,6 @@
     --color-tertiary: #c49d9d;
     --color-background: #130909;
     --color-background-end: #191210;
-    --font-serif: var(--font-serif-loaded), ui-serif, Georgia, serif;
 }
 
 /* Locked one-screen shell: wide enough for the bento and tall enough to fit it. Otherwise the page scrolls normally. */

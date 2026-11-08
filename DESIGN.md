@@ -9,7 +9,7 @@ Dark red glass bento. Derived from the shipped code (`src/app/globals.css`, page
 - `accent` #ff3b5f: any small red text (4.9:1 on glass). Use for tile titles, links, status pills, errors, active nav.
 
 ## Type
-- Fira Sans 400/500/700 (body, UI). Source Serif 4 italic 400 for tile labels (`.tile-label`, 30px).
+- Fira Sans 400/500/700 (body, UI). Platform serif (Tailwind default `ui-serif` stack) italic for tile labels (`.tile-label`, 30px).
 - `.tile-title`: 12px bold uppercase tracked accent. One per tile.
 - Hero: `clamp(2rem, 6.4vh, 3.75rem)` bold, primary and tertiary.
 
