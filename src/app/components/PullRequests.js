@@ -1,5 +1,7 @@
 'use client';
 import { useState } from 'react';
+import { motion } from 'motion/react';
+import { ease } from './Transition';
 import { GoGitMerge, GoGitPullRequest, GoGitPullRequestClosed } from 'react-icons/go';
 
 const ICON = { MERGED: GoGitMerge, OPEN: GoGitPullRequest, CLOSED: GoGitPullRequestClosed };
@@ -29,9 +31,16 @@ export default function PullRequests({ prs }) {
                             key={id}
                             aria-pressed={scope === id}
                             onClick={() => setScope(id)}
-                            className={`px-2.5 leading-5 rounded-full border transition-colors ${scope === id ? 'border-primary/60 text-accent bg-primary/10' : 'border-tertiary/20 hover:text-accent'}`}
+                            className={`relative px-2.5 leading-5 rounded-full border transition-colors duration-200 ${scope === id ? 'border-transparent text-accent' : 'border-tertiary/20 hover:text-accent'}`}
                         >
-                            {label}
+                            {scope === id && (
+                                <motion.span
+                                    layoutId="pr-scope"
+                                    className="absolute inset-0 rounded-full border border-primary/60 bg-primary/10"
+                                    transition={{ duration: 0.35, ease }}
+                                />
+                            )}
+                            <span className="relative">{label}</span>
                         </button>
                     ))}
                 </div>
@@ -45,11 +54,11 @@ export default function PullRequests({ prs }) {
                         const I = ICON[p.state] || GoGitPullRequest;
                         return (
                             <li key={p.url} className="shrink-0">
-                                <a href={p.url} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-md px-1.5 py-0.5 text-sm hover:bg-tertiary/10 transition-colors">
+                                <a href={p.url} target="_blank" rel="noreferrer" className="flex items-center gap-2 rounded-md px-1.5 py-0.5 text-sm hover:bg-tertiary/10 hover:translate-x-0.5 transition-[background-color,translate] duration-300 ease-out-expo">
                                     <I className={`shrink-0 ${TONE[p.state]}`} aria-label={p.state.toLowerCase()} />
                                     <span className="font-bold shrink-0 max-w-[45%] truncate">{p.repo}</span>
-                                    <span className="truncate text-tertiary/90">{p.title}</span>
-                                    <span className="ml-auto pl-2 shrink-0 text-xs text-tertiary/80">{month(p.createdAt)}</span>
+                                    <span className="truncate">{p.title}</span>
+                                    <span className="ml-auto pl-2 shrink-0 text-xs tabular-nums text-tertiary/80">{month(p.createdAt)}</span>
                                 </a>
                             </li>
                         );
