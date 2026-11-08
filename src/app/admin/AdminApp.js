@@ -1,6 +1,6 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
-import { MdArrowUpward, MdArrowDownward, MdEdit, MdDeleteOutline, MdAdd, MdLogout, MdOpenInNew } from 'react-icons/md';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { MdArrowUpward, MdArrowDownward, MdEdit, MdDeleteOutline, MdAdd, MdLogout, MdOpenInNew, MdRefresh } from 'react-icons/md';
 import { SCHEMAS, toText } from '@/lib/schema';
 import { listAction, saveAction, deleteAction, moveAction, logoutAction } from './actions';
 import { input, btn, btnPrimary, iconBtn } from './ui';
@@ -13,6 +13,7 @@ const initVals = (schema, doc = {}) =>
         ])
     );
 
+const TTL = 5 * 60 * 1000;
 const LONG = ['textarea', 'strings', 'pairs'];
 
 function Field({ f, value, onChange, wide }) {
@@ -121,18 +122,29 @@ export default function AdminApp() {
     const [notice, setNotice] = useState('');
     const schema = { ...SCHEMAS[tab], key: tab };
 
+    // Per-tab list cache. Only this panel writes (via server actions), so a tab switch can reuse the list;
+    // every save/delete/move forces a refetch, and TTL + the Refresh button cover edits made elsewhere.
+    const cache = useRef({});
+    const current = useRef(tab);
+    current.current = tab;
+
     const load = useCallback(
-        async (msg = '') => {
-            setItems(null);
+        async (msg = '', force = false) => {
             setEditing(null);
             setConfirmId(null);
             setErr('');
             setNotice(msg);
+            const hit = cache.current[tab];
+            setItems(hit && !force ? hit.items : null);
+            if (hit && !force && Date.now() - hit.at < TTL) return;
             try {
-                setItems(await listAction(tab));
+                const fresh = await listAction(tab);
+                cache.current[tab] = { items: fresh, at: Date.now() };
+                if (current.current === tab) setItems(fresh);
             } catch (e) {
+                if (current.current !== tab) return;
                 setErr(e.message);
-                setItems([]);
+                setItems((hit && hit.items) || []);
             }
         },
         [tab]
@@ -141,6 +153,21 @@ export default function AdminApp() {
         load();
     }, [load]);
     useEffect(() => {
+        // Quiet revalidate on return to the tab: never touches an open edit form.
+        const onFocus = async () => {
+            const t = current.current;
+            const hit = cache.current[t];
+            if (hit && Date.now() - hit.at < TTL) return;
+            try {
+                const fresh = await listAction(t);
+                cache.current[t] = { items: fresh, at: Date.now() };
+                if (current.current === t) setItems(fresh);
+            } catch {}
+        };
+        window.addEventListener('focus', onFocus);
+        return () => window.removeEventListener('focus', onFocus);
+    }, []);
+    useEffect(() => {
         if (!notice) return;
         const t = setTimeout(() => setNotice(''), 3000);
         return () => clearTimeout(t);
@@ -148,7 +175,7 @@ export default function AdminApp() {
 
     const act = async (fn, msg) => {
         const r = await fn();
-        r?.error ? setErr(r.error) : load(msg);
+        r?.error ? setErr(r.error) : load(msg, true);
     };
 
     const tabs = Object.entries(SCHEMAS);
@@ -190,6 +217,11 @@ export default function AdminApp() {
                     <div role="status" className="ml-auto text-sm text-accent">
                         {notice}
                     </div>
+                    {!editing && (
+                        <button onClick={() => load('', true)} aria-label="Refresh from database" title="Refresh from database" className={iconBtn}>
+                            <MdRefresh />
+                        </button>
+                    )}
                     {!schema.single && !editing && (
                         <button onClick={() => setEditing({})} className={btnPrimary}>
                             <MdAdd aria-hidden="true" /> New
@@ -210,13 +242,13 @@ export default function AdminApp() {
                         ))}
                     </div>
                 ) : schema.single ? (
-                    <DocForm key={tab} schema={schema} doc={items[0]} onSave={() => load('Saved')} />
+                    <DocForm key={tab} schema={schema} doc={items[0]} onSave={() => load('Saved', true)} />
                 ) : editing ? (
                     <DocForm
                         key={editing.doc?.id || 'new'}
                         schema={schema}
                         doc={editing.doc}
-                        onSave={() => load('Saved')}
+                        onSave={() => load('Saved', true)}
                         onCancel={() => setEditing(null)}
                     />
                 ) : items.length === 0 ? (
