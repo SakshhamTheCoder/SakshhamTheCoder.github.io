@@ -11,16 +11,18 @@ export default function EmailCard({ email }) {
 
     return (
         <>
-            <motion.div
+            <motion.button
                 variants={item}
+                type="button"
+                aria-label="Email"
+                aria-haspopup="dialog"
                 onClick={() => setOpen(true)}
-                className="glass rounded-2xl p-6 flex items-center justify-center text-2xl text-primary cursor-pointer"
+                className="glass glass-link rounded-2xl p-4 flex items-center justify-center text-primary cursor-pointer"
             >
-                <FaEnvelope size={36} />
-            </motion.div>
+                <FaEnvelope size={28} />
+            </motion.button>
 
             {open && <EmailModal email={email} onClose={() => setOpen(false)} />}
         </>
     );
 }
-
