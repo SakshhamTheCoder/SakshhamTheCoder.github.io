@@ -1,6 +1,6 @@
 import { MdArrowOutward } from 'react-icons/md';
 import HighlightedSpan from '../components/HighlightedSpan';
-import { getProjects } from '@/lib/getProjects';
+import { getProjects } from '@/lib/content';
 import * as motion from 'motion/react-client';
 import { container, item } from '@/app/components/Transition';
 
