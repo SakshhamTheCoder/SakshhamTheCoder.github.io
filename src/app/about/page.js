@@ -36,7 +36,7 @@ function Cert({ a }) {
 function Group({ id, title, entries, className }) {
     if (!entries.length) return null;
     return (
-        <motion.section variants={item} className={`${tile} flex flex-col ${className}`} aria-labelledby={id}>
+        <motion.section variants={item} style={{ flexGrow: entries.length }} className={`${tile} flex flex-col ${className}`} aria-labelledby={id}>
             <h2 id={id} className="tile-title mb-3">
                 {title}
             </h2>
@@ -49,7 +49,7 @@ function Group({ id, title, entries, className }) {
                         <div className="min-w-0 flex-1">
                             <div className="flex items-baseline justify-between gap-3">
                                 <h3 className="font-bold text-sm">{t.title}</h3>
-                                {t.range && <span className={`text-xs whitespace-nowrap ${t.now ? 'text-accent' : 'text-tertiary/80'}`}>{t.range}</span>}
+                                {t.range && <span className={`text-xs tabular-nums whitespace-nowrap ${t.now ? 'text-accent' : 'text-tertiary/80'}`}>{t.range}</span>}
                             </div>
                             <p className="text-xs leading-snug">{t.sub}</p>
                         </div>
@@ -78,27 +78,31 @@ export default async function About() {
             variants={container}
             initial="hidden"
             animate="visible"
-            className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 lg:grid-rows-[minmax(0,1.6fr)_minmax(0,1fr)] gap-4"
+            className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 lg:grid-rows-[minmax(0,1.7fr)_minmax(0,1fr)] gap-4"
         >
             <h1 className="sr-only">About Sakshham Bhagat</h1>
 
             <motion.div variants={container} className="lg:col-span-4 lg:row-span-2 flex flex-col gap-4 min-h-0 order-3 lg:order-none">
-                <Group id="work-title" title="Work & research" entries={work} className="lg:flex-[3]" />
-                <Group id="beyond-title" title="Community, open source & music" entries={beyond} className="lg:flex-[3]" />
+                {/* Tiles grow in proportion to their entries, so a short list is not stretched into a tall, empty tile. */}
+                <Group id="work-title" title="Work & research" entries={work} className="lg:basis-auto" />
+                <Group id="beyond-title" title="Community, open source & music" entries={beyond} className="lg:basis-auto" />
                 {profile.educationSchool && (
-                    <motion.section variants={item} className={`${tile} flex items-start gap-3`} aria-labelledby="edu-title">
-                        <MdSchool className="text-primary text-xl mt-0.5 shrink-0" aria-hidden="true" />
-                        <div className="min-w-0 flex-1">
-                            <h2 id="edu-title" className="tile-title mb-1">
-                                Education
-                            </h2>
-                            <div className="flex items-baseline justify-between gap-3">
-                                <h3 className="font-bold text-sm">{profile.educationSchool}</h3>
-                                <span className="text-xs text-tertiary/80 whitespace-nowrap">{profile.educationDates}</span>
+                    // Same anatomy as the lists above: title on top, then an icon beside the entry.
+                    <motion.section variants={item} className={`${tile} flex flex-col`} aria-labelledby="edu-title">
+                        <h2 id="edu-title" className="tile-title mb-3">
+                            Education
+                        </h2>
+                        <div className="flex items-center gap-3">
+                            <MdSchool className="text-primary text-xl shrink-0" aria-hidden="true" />
+                            <div className="min-w-0 flex-1">
+                                <div className="flex items-baseline justify-between gap-3">
+                                    <h3 className="font-bold text-sm">{profile.educationSchool}</h3>
+                                    <span className="text-xs tabular-nums text-tertiary/80 whitespace-nowrap">{profile.educationDates}</span>
+                                </div>
+                                <p className="text-xs leading-snug">
+                                    {[profile.educationDegree, profile.educationCgpa && `CGPA ${profile.educationCgpa}`].filter(Boolean).join(' · ')}
+                                </p>
                             </div>
-                            <p className="text-xs leading-snug">
-                                {[profile.educationDegree, profile.educationCgpa && `CGPA ${profile.educationCgpa}`].filter(Boolean).join(' · ')}
-                            </p>
                         </div>
                     </motion.section>
                 )}
@@ -108,10 +112,10 @@ export default async function About() {
                 <h2 id="skills-title" className="tile-title mb-3">
                     Technical skillset
                 </h2>
-                <motion.div variants={container} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-2.5">
+                <motion.div variants={container} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-2">
                     {SKILLS.map((group) => (
                         <motion.div key={group.id} variants={item}>
-                            <h3 className="flex items-center gap-2 mb-1.5 text-sm font-bold text-tertiary">
+                            <h3 className="flex items-center gap-2 mb-1 text-sm font-bold text-tertiary">
                                 <span className="text-primary text-base" aria-hidden="true">
                                     <Icon name={group.icon} />
                                 </span>
@@ -119,7 +123,7 @@ export default async function About() {
                             </h3>
                             <ul className="flex flex-wrap gap-1">
                                 {group.items.map((skill) => (
-                                    <li key={skill} className="text-[0.6875rem] leading-5 px-2 rounded-full border border-tertiary/20">
+                                    <li key={skill} className="text-xs leading-5 px-2 rounded-full border border-tertiary/20 hover:border-primary/50 hover:text-accent transition-colors">
                                         {skill}
                                     </li>
                                 ))}
@@ -129,9 +133,9 @@ export default async function About() {
                 </motion.div>
             </motion.section>
 
-            <motion.section variants={item} className={`${tile} lg:col-span-4 flex flex-col justify-between gap-3 order-1 lg:order-none`} aria-label="Focus">
-                <p className="font-serif italic text-lg leading-snug text-tertiary">{profile.focus}</p>
-                <div className="flex flex-col gap-2">
+            <motion.section variants={item} className={`${tile} lg:col-span-4 flex flex-col justify-between gap-2 order-1 lg:order-none`} aria-label="Focus">
+                <p className="font-serif italic text-2xl leading-tight text-tertiary">{profile.focus}</p>
+                <div className="flex flex-col gap-1.5">
                     <p className="text-sm leading-snug">{profile.interests}</p>
                     {profile.location && (
                         <p className="flex items-center gap-1.5 text-xs text-accent">
@@ -142,7 +146,7 @@ export default async function About() {
             </motion.section>
 
             {achievements.length > 0 && (
-                <motion.section variants={item} className={`${tile} lg:col-span-4 order-4 lg:order-none flex flex-col gap-3`} aria-labelledby="ach-title">
+                <motion.section variants={item} className={`${tile} lg:col-span-4 order-4 lg:order-none flex flex-col lg:justify-between gap-3`} aria-labelledby="ach-title">
                     <h2 id="ach-title" className="tile-title">
                         Recognition
                     </h2>
@@ -153,7 +157,7 @@ export default async function About() {
                         .filter((g) => g.items.length)
                         .map((g) => (
                             <div key={g.id}>
-                                <h3 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-tertiary mb-1.5">
+                                <h3 className="tile-subtitle flex items-center gap-1.5 mb-1.5">
                                     <g.Mark className="text-primary text-base" aria-hidden="true" />
                                     {g.label}
                                 </h3>
