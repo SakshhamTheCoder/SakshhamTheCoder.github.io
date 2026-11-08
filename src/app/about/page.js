@@ -1,10 +1,39 @@
-import { MdCode, MdSchool, MdLocationPin, MdAutoGraph } from 'react-icons/md';
-import HighlightedSpan from '../components/HighlightedSpan';
+import { MdLocationPin, MdEmojiEvents, MdVerified, MdSchool } from 'react-icons/md';
 import * as motion from 'motion/react-client';
 import { container, item } from '@/app/components/Transition';
 import { getProfile, getSkills, getExperience, getAchievements } from '@/lib/content';
 import { formatRange } from '@/lib/format';
 import { Icon } from '@/lib/icons';
+
+// Tiles scroll inside themselves if content outgrows them; the page never scrolls on lg.
+const tile = 'glass rounded-2xl p-5 text-tertiary min-h-0 overflow-y-auto';
+
+function Group({ id, title, entries, className }) {
+    if (!entries.length) return null;
+    return (
+        <motion.section variants={item} className={`${tile} flex flex-col ${className}`} aria-labelledby={id}>
+            <h2 id={id} className="tile-title mb-3">
+                {title}
+            </h2>
+            <ul className="flex flex-1 flex-col justify-between gap-3">
+                {entries.map((t) => (
+                    <li key={t.id} className="flex items-center gap-3">
+                        <span className="text-primary text-xl shrink-0" aria-hidden="true">
+                            <Icon name={t.icon} />
+                        </span>
+                        <div className="min-w-0 flex-1">
+                            <div className="flex items-baseline justify-between gap-3">
+                                <h3 className="font-bold text-sm">{t.title}</h3>
+                                {t.range && <span className={`text-xs whitespace-nowrap ${t.now ? 'text-accent' : 'text-tertiary/80'}`}>{t.range}</span>}
+                            </div>
+                            <p className="text-xs leading-snug">{t.sub}</p>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </motion.section>
+    );
+}
 
 export default async function About() {
     const [profile, SKILLS, experience, achievements] = await Promise.all([
@@ -13,138 +42,101 @@ export default async function About() {
         getExperience(),
         getAchievements(),
     ]);
+
+    const entry = (e) => ({ id: e.id, icon: e.icon, title: e.org, sub: e.role, range: formatRange(e.startDate, e.endDate), now: Boolean(e.startDate && !e.endDate) });
+    // Not one timeline: paid/research roles are dated and sequential, the rest run in parallel.
+    const work = experience.filter((e) => ['work', 'research'].includes(e.kind)).map(entry);
+    const beyond = experience.filter((e) => !['work', 'research'].includes(e.kind)).map(entry);
+
     return (
-        <motion.div variants={container} initial="hidden" animate="visible" className="flex-1 flex flex-col gap-6">
-            <motion.div variants={item} className="px-2 text-center">
-                <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
-                    About <HighlightedSpan>Me</HighlightedSpan>
-                </h1>
-            </motion.div>
+        <motion.div
+            variants={container}
+            initial="hidden"
+            animate="visible"
+            className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 lg:grid-rows-[minmax(0,1.6fr)_minmax(0,1fr)] gap-4"
+        >
+            <h1 className="sr-only">About Sakshham Bhagat</h1>
 
-            <motion.div variants={container} className="flex flex-col lg:flex-row gap-6">
-                <motion.div variants={container} className="flex flex-col gap-4 flex-1">
-                    <motion.div variants={item} className="glass rounded-2xl p-5 text-tertiary">
-                        <div className="flex items-center gap-3 mb-2 text-primary">
-                            <MdSchool />
-                            <h4 className="font-bold">Education</h4>
-                        </div>
-                        <p className="text-sm leading-relaxed">
-                            {profile.educationDegree} from {profile.educationSchool}
-                        </p>
-                        {(profile.educationDates || profile.educationCgpa) && (
-                            <p className="text-xs opacity-70 mt-1">
-                                {[profile.educationDates, profile.educationCgpa && `CGPA ${profile.educationCgpa}`]
-                                    .filter(Boolean)
-                                    .join(' · ')}
-                            </p>
-                        )}
-                    </motion.div>
-
-                    <motion.div variants={item} className="glass rounded-2xl p-5 text-tertiary">
-                        <div className="flex items-center gap-3 mb-2 text-primary">
-                            <MdLocationPin />
-                            <h4 className="font-bold">Location</h4>
-                        </div>
-                        <p className="text-sm">{profile.location}</p>
-                    </motion.div>
-
-                    <motion.div variants={item} className="glass rounded-2xl p-5 text-tertiary">
-                        <div className="flex items-center gap-3 mb-2 text-primary">
-                            <MdCode />
-                            <h4 className="font-bold">Primary Focus</h4>
-                        </div>
-                        <p className="text-sm leading-relaxed">
-                            {profile.focus}
-                        </p>
-                    </motion.div>
-
-                    <motion.div variants={item} className="glass rounded-2xl p-5 text-tertiary">
-                        <div className="flex items-center gap-3 mb-2 text-primary">
-                            <MdAutoGraph />
-                            <h4 className="font-bold">Technical Interests</h4>
-                        </div>
-                        <p className="text-sm leading-relaxed">
-                            {profile.interests}
-                        </p>
-                    </motion.div>
-                </motion.div>
-
-                <motion.div variants={item} className="glass-navbar rounded-2xl p-6 text-tertiary flex-2">
-                    <h2 className="text-lg font-bold text-primary mb-5">Technical Skillset</h2>
-
-                    <motion.div variants={container} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                        {SKILLS.map((group) => (
-                            <motion.div key={group.id} variants={item}>
-                                <div className="flex items-center gap-2 mb-3 text-primary">
-                                    <span className="text-lg">
-                                        <Icon name={group.icon} />
-                                    </span>
-                                    <h3 className="font-bold text-sm uppercase tracking-wide">{group.title}</h3>
-                                </div>
-
-                                <div className="flex flex-wrap gap-2">
-                                    {group.items.map((skill) => (
-                                        <span
-                                            key={skill}
-                                            className="text-xs px-3 py-1 rounded-full border border-tertiary/20 hover:border-primary/40 transition"
-                                        >
-                                            {skill}
-                                        </span>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                </motion.div>
-            </motion.div>
-
-            {experience.length > 0 && (
-                <motion.div variants={item} className="glass-navbar rounded-2xl p-6 text-tertiary">
-                    <h2 className="text-lg font-bold text-primary mb-5">Experience</h2>
-                    <div className="flex flex-col gap-5">
-                        {experience.map((e) => (
-                            <div key={e.id} className="border-b border-tertiary/10 pb-4 last:border-b-0 last:pb-0">
-                                <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-                                    <h3 className="font-bold">
-                                        {e.org} <span className="font-normal text-sm">· {e.role}</span>
-                                    </h3>
-                                    <span className="text-xs opacity-70">{formatRange(e.startDate, e.endDate)}</span>
-                                </div>
-                                {e.bullets?.length > 0 && (
-                                    <ul className="list-disc ml-5 mt-2 text-sm space-y-1">
-                                        {e.bullets.map((b) => (
-                                            <li key={b}>{b}</li>
-                                        ))}
-                                    </ul>
-                                )}
-                                {e.skills?.length > 0 && (
-                                    <div className="flex flex-wrap gap-2 mt-2">
-                                        {e.skills.map((k) => (
-                                            <span key={k} className="text-xs px-3 py-1 rounded-full border border-tertiary/20">
-                                                {k}
-                                            </span>
-                                        ))}
-                                    </div>
-                                )}
+            <motion.div variants={container} className="lg:col-span-4 lg:row-span-2 flex flex-col gap-4 min-h-0 order-3 lg:order-none">
+                <Group id="work-title" title="Work & research" entries={work} className="lg:flex-[3]" />
+                <Group id="beyond-title" title="Community, open source & music" entries={beyond} className="lg:flex-[3]" />
+                {profile.educationSchool && (
+                    <motion.section variants={item} className={`${tile} flex items-start gap-3`} aria-labelledby="edu-title">
+                        <MdSchool className="text-primary text-xl mt-0.5 shrink-0" aria-hidden="true" />
+                        <div className="min-w-0 flex-1">
+                            <h2 id="edu-title" className="tile-title mb-1">
+                                Education
+                            </h2>
+                            <div className="flex items-baseline justify-between gap-3">
+                                <h3 className="font-bold text-sm">{profile.educationSchool}</h3>
+                                <span className="text-xs text-tertiary/80 whitespace-nowrap">{profile.educationDates}</span>
                             </div>
-                        ))}
-                    </div>
+                            <p className="text-xs leading-snug">
+                                {[profile.educationDegree, profile.educationCgpa && `CGPA ${profile.educationCgpa}`].filter(Boolean).join(' · ')}
+                            </p>
+                        </div>
+                    </motion.section>
+                )}
+            </motion.div>
+
+            <motion.section variants={item} className={`${tile} lg:col-span-8 order-2 lg:order-none`} aria-labelledby="skills-title">
+                <h2 id="skills-title" className="tile-title mb-4">
+                    Technical skillset
+                </h2>
+                <motion.div variants={container} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-3">
+                    {SKILLS.map((group) => (
+                        <motion.div key={group.id} variants={item}>
+                            <h3 className="flex items-center gap-2 mb-2 text-sm font-bold text-tertiary">
+                                <span className="text-primary text-base" aria-hidden="true">
+                                    <Icon name={group.icon} />
+                                </span>
+                                {group.title}
+                            </h3>
+                            <ul className="flex flex-wrap gap-1.5">
+                                {group.items.map((skill) => (
+                                    <li key={skill} className="text-[11px] leading-5 px-2 rounded-full border border-tertiary/20">
+                                        {skill}
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
+                    ))}
                 </motion.div>
-            )}
+            </motion.section>
+
+            <motion.section variants={item} className={`${tile} lg:col-span-4 flex flex-col justify-between gap-3 order-1 lg:order-none`} aria-label="Focus">
+                <p className="font-serif italic text-xl leading-snug text-tertiary">{profile.focus}</p>
+                <div className="flex flex-col gap-2">
+                    <p className="text-sm leading-snug">{profile.interests}</p>
+                    {profile.location && (
+                        <p className="flex items-center gap-1.5 text-xs text-accent">
+                            <MdLocationPin aria-hidden="true" /> {profile.location}
+                        </p>
+                    )}
+                </div>
+            </motion.section>
 
             {achievements.length > 0 && (
-                <motion.div variants={item} className="glass-navbar rounded-2xl p-6 text-tertiary">
-                    <h2 className="text-lg font-bold text-primary mb-5">Achievements & Certifications</h2>
-                    <ul className="space-y-2 text-sm">
-                        {achievements.map((a) => (
-                            <li key={a.id}>
-                                <span className="font-bold">{a.title}</span>
-                                {a.detail && <span> · {a.detail}</span>}
-                                {a.date && <span className="opacity-70"> · {a.date}</span>}
-                            </li>
-                        ))}
+                <motion.section variants={item} className={`${tile} lg:col-span-4 order-4 lg:order-none`} aria-labelledby="ach-title">
+                    <h2 id="ach-title" className="tile-title mb-3">
+                        Achievements &amp; certifications
+                    </h2>
+                    <ul className="flex flex-col gap-2.5">
+                        {achievements.map((a) => {
+                            const Mark = a.kind === 'certification' ? MdVerified : MdEmojiEvents;
+                            return (
+                                <li key={a.id} className="flex items-start gap-2.5">
+                                    <Mark className="text-primary text-lg mt-0.5 shrink-0" aria-label={a.kind === 'certification' ? 'Certification' : 'Award'} />
+                                    <p className="text-sm leading-snug">
+                                        <span className="font-bold">{a.title}</span>
+                                        {a.detail && <span> · {a.detail}</span>}
+                                        {a.date && <span className="text-tertiary/80"> · {a.date}</span>}
+                                    </p>
+                                </li>
+                            );
+                        })}
                     </ul>
-                </motion.div>
+                </motion.section>
             )}
         </motion.div>
     );
