@@ -1,12 +1,14 @@
 # Design system
 
-Dark red glass bento. Derived from the shipped code (`src/app/globals.css`, pages) on 2026-11-08. Replace by running `/impeccable document` after bigger changes.
+Dark slate-blue glass bento. Derived from the shipped code (`src/app/globals.css`, pages) on 2026-11-08. Replace by running `/impeccable document` after bigger changes.
 
 ## Color (tokens in `globals.css` `@theme`)
-- `background` #130909, page gradient to `background-end` #191210.
-- `tertiary` #c49d9d: all body text, borders (`/10`), tile fill (`/5`). Never below `/80` for text.
-- `primary` #da0037: fills, icons, borders, large display type only (3.8:1 on bg).
-- `accent` #ff3b5f: any small red text (4.9:1 on glass). Use for tile titles, links, status pills, errors, active nav.
+Mostly monochrome: a blue-tinted near-black and blue-grey text, with one muted blue and a pale blue accent. Derived from the "Tell Me Something" cover (eclipse blue), desaturated on purpose so it is easy on the eyes.
+- `background` #0a0d10, page gradient to `background-end` #101519.
+- `tertiary` #b0aea6 (a faint warm grey, halfway between the blue and the particles' sand): all body text, borders (`/10`), tile fill (`/5`). Never below `/80` for text.
+- `primary` #7d9bb0: fills, icons, borders, large display type only (6.6:1 on bg). Text on a primary fill (the Live button) is `background`, not white.
+- `accent` #afc5d4: any small coloured text. Use for tile titles, links, status text, errors, active nav.
+- Particles (`particles.js`) are warm sand grey `#b6ae9a`, not blue, so the blurred glow behind the glass is the one warm note against the cool UI. Keep it.
 
 ## Type
 - Fira Sans 400/700 (body, UI) plus the real 400 italic (`--font-fira-italic`, applied to `.italic` that is not `.font-serif`; do not rely on browser-faked italics). Newsreader italic (loaded in `layout.js`, mapped to `--font-serif`, so the same on every OS) for tile labels (`.tile-label`, 30px) and statements.
@@ -37,7 +39,8 @@ Dark red glass bento. Derived from the shipped code (`src/app/globals.css`, page
 - Admin: sidebar tabs + one panel; forms max 3xl wide, 2-column field grid, Save bar pinned under the scroll area.
 
 ## Contribution chart
-Cells fill the tile (`grid-rows-7`, `aspect-square`). Levels: tertiary/15, primary/35, primary/60, primary, accent.
+Cells fill the tile (`grid-rows-7`, `aspect-square`). Levels: tertiary/20, primary/50, primary/75, primary, a near-white blue. A day's level is `ceil(sqrt(count / busiest day) * 4)`, so ordinary days are not all stuck in the dimmest step.
+Contrast checked (WCAG, text over the glass tile): body 7.7:1, meta (`/80`) 5.4:1, accent 9.5:1, primary icons 5.8:1, dark text on primary 6.7:1.
 
 ## Motion
 One ease everywhere: `cubic-bezier(0.16, 1, 0.3, 1)` (`--ease-out-expo` in CSS, `ease` exported from `Transition.js`).
