@@ -39,10 +39,8 @@ export default function ContributionChart({ cal }) {
                         w.contributionDays.map((d) => (
                             <div
                                 key={d.date}
-                                tabIndex={0}
-                                aria-label={`${d.contributionCount} contributions on ${d.date}`}
                                 data-tip={`${d.contributionCount} on ${d.date}`}
-                                className={`relative aspect-square rounded-xs ${LEVELS[level(d.contributionCount)]} hover:after:block focus:after:block after:hidden after:content-[attr(data-tip)] after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:mb-1 after:z-20 after:whitespace-nowrap after:rounded after:bg-black after:px-2 after:py-1 after:text-xs after:text-tertiary`}
+                                className={`chart-cell ${LEVELS[level(d.contributionCount)]}`}
                             />
                         ))
                     )}
