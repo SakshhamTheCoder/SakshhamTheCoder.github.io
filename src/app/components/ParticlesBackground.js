@@ -1,25 +1,14 @@
 'use client';
-import { useEffect, useMemo } from 'react';
-import Particles, { initParticlesEngine } from '@tsparticles/react';
-import { loadSlim } from '@tsparticles/slim';
-import { particleConfig } from './particles';
+import dynamic from 'next/dynamic';
 
-const ParticlesBackground = ({ children }) => {
-    useEffect(() => {
-        initParticlesEngine(async (engine) => {
-            await loadSlim(engine);
-        });
-    }, []);
+// Loaded after first paint so the particle engine stays out of the critical bundle.
+const ParticlesCanvas = dynamic(() => import('./ParticlesCanvas'), { ssr: false });
 
-    const options = useMemo(() => particleConfig, []);
-
-    return (
-        <>
-            <Particles options={options} />
-            {children}
-        </>
-    );
-};
+const ParticlesBackground = ({ children }) => (
+    <>
+        <ParticlesCanvas />
+        {children}
+    </>
+);
 
 export default ParticlesBackground;
-
