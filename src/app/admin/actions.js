@@ -3,7 +3,7 @@ import { cookies, headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { updateTag } from 'next/cache';
 import { admin, db } from '@/lib/firebaseAdmin';
-import { getAdmin, signIn, limited, noteFail, COOKIE } from '@/lib/adminAuth';
+import { getAdmin, checkPassword, makeSession, limited, noteFail, COOKIE } from '@/lib/adminAuth';
 import { SCHEMAS, clean } from '@/lib/schema';
 
 const { FieldValue } = admin.firestore;
@@ -19,16 +19,12 @@ const ser = (v) =>
 export async function loginAction(_prev, fd) {
     const ip = (await headers()).get('x-forwarded-for')?.split(',')[0] || 'local';
     if (limited(ip)) return { error: 'Too many attempts. Try again later.' };
-    let session = null;
-    try {
-        session = await signIn(String(fd.get('email') || ''), String(fd.get('password') || ''));
-    } catch {}
-    if (!session) {
+    if (!checkPassword(String(fd.get('password') || ''))) {
         noteFail(ip);
         await new Promise((r) => setTimeout(r, 800));
         return { error: 'Invalid credentials.' };
     }
-    (await cookies()).set(COOKIE, session, {
+    (await cookies()).set(COOKIE, makeSession(), {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',

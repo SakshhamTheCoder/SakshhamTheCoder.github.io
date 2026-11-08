@@ -74,7 +74,7 @@ function DocForm({ schema, doc, onSave, onCancel }) {
     );
 }
 
-export default function AdminApp({ email }) {
+export default function AdminApp() {
     const [tab, setTab] = useState('projects');
     const [items, setItems] = useState(null);
     const [editing, setEditing] = useState(null); // {doc?} ; doc undefined = new
@@ -108,8 +108,7 @@ export default function AdminApp({ email }) {
                         {s.label}
                     </button>
                 ))}
-                <span className="ml-auto text-xs">{email}</span>
-                <button onClick={() => logoutAction()} className={btn}>
+                <button onClick={() => logoutAction()} className={btn + ' ml-auto'}>
                     Log out
                 </button>
             </div>
