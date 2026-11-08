@@ -8,6 +8,31 @@ import { Icon } from '@/lib/icons';
 // Tiles scroll inside themselves if content outgrows them; the page never scrolls on lg.
 const tile = 'glass rounded-2xl p-5 text-tertiary min-h-0 overflow-y-auto';
 
+// Achievement: "Title · detail · year".
+function Award({ a }) {
+    return (
+        <>
+            <span className="font-bold">{a.title}</span>
+            {a.detail && <span> · {a.detail}</span>}
+            {a.date && <span className="text-tertiary/80"> · {a.date}</span>}
+        </>
+    );
+}
+
+// Certification: "Org: Certificate name (year)". Write the title as "Org: Name" in admin and put the year in Date.
+function Cert({ a }) {
+    const i = a.title.indexOf(': ');
+    const org = i > 0 ? a.title.slice(0, i + 1) : '';
+    const name = i > 0 ? a.title.slice(i + 2) : a.title;
+    return (
+        <>
+            {org && <span className="font-bold">{org} </span>}
+            <span>{name}</span>
+            {a.date && <span className="text-tertiary/80"> ({a.date})</span>}
+        </>
+    );
+}
+
 function Group({ id, title, entries, className }) {
     if (!entries.length) return null;
     return (
@@ -117,25 +142,28 @@ export default async function About() {
             </motion.section>
 
             {achievements.length > 0 && (
-                <motion.section variants={item} className={`${tile} lg:col-span-4 order-4 lg:order-none`} aria-labelledby="ach-title">
-                    <h2 id="ach-title" className="tile-title mb-3">
-                        Achievements &amp; certifications
+                <motion.section variants={item} className={`${tile} lg:col-span-4 order-4 lg:order-none flex flex-col gap-3`} aria-labelledby="ach-title">
+                    <h2 id="ach-title" className="tile-title">
+                        Recognition
                     </h2>
-                    <ul className="flex flex-col gap-2.5">
-                        {achievements.map((a) => {
-                            const Mark = a.kind === 'certification' ? MdVerified : MdEmojiEvents;
-                            return (
-                                <li key={a.id} className="flex items-start gap-2.5">
-                                    <Mark className="text-primary text-lg mt-0.5 shrink-0" aria-label={a.kind === 'certification' ? 'Certification' : 'Award'} />
-                                    <p className="text-sm leading-snug">
-                                        <span className="font-bold">{a.title}</span>
-                                        {a.detail && <span> · {a.detail}</span>}
-                                        {a.date && <span className="text-tertiary/80"> · {a.date}</span>}
-                                    </p>
-                                </li>
-                            );
-                        })}
-                    </ul>
+                    {[
+                        { id: 'award', label: 'Achievements', Mark: MdEmojiEvents, items: achievements.filter((a) => a.kind !== 'certification') },
+                        { id: 'certification', label: 'Certifications', Mark: MdVerified, items: achievements.filter((a) => a.kind === 'certification') },
+                    ]
+                        .filter((g) => g.items.length)
+                        .map((g) => (
+                            <div key={g.id}>
+                                <h3 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-tertiary mb-1.5">
+                                    <g.Mark className="text-primary text-base" aria-hidden="true" />
+                                    {g.label}
+                                </h3>
+                                <ul className="flex flex-col gap-1.5 text-sm leading-snug">
+                                    {g.items.map((a) => (
+                                        <li key={a.id}>{g.id === 'certification' ? <Cert a={a} /> : <Award a={a} />}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
                 </motion.section>
             )}
         </motion.div>
