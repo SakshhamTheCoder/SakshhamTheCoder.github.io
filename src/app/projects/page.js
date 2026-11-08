@@ -1,94 +1,144 @@
 import { MdArrowOutward } from 'react-icons/md';
-import HighlightedSpan from '../components/HighlightedSpan';
 import { getProjects } from '@/lib/content';
 import { getStars } from '@/lib/github';
 import * as motion from 'motion/react-client';
 import { container, item } from '@/app/components/Transition';
+
+// Bento slots, in rank order, on a 9-column x 4-row grid (lg+). Sizes echo the layout sketch:
+// one big card beside a stack of two, a row of three, then a ragged last row.
+const SLOTS = [
+    { size: 'large', cls: 'lg:col-span-6 lg:row-span-2' },
+    { size: 'small', cls: 'lg:col-span-3' },
+    { size: 'small', cls: 'lg:col-span-3' },
+    { size: 'medium', cls: 'lg:col-span-3' },
+    { size: 'medium', cls: 'lg:col-span-3' },
+    { size: 'medium', cls: 'lg:col-span-3' },
+    { size: 'medium', cls: 'lg:col-span-4' },
+    { size: 'small', cls: 'lg:col-span-2' },
+    { size: 'small', cls: 'lg:col-span-3' },
+];
+
+const MAX_TECH = { large: 8, medium: 4, small: 0 };
+const DESC_CLAMP = { large: 'line-clamp-6 font-serif italic text-2xl leading-snug', medium: 'line-clamp-3 text-sm', small: 'line-clamp-2 text-sm' };
+
+function Card({ project, stars, size, cls }) {
+    const tech = (project.techStack || []).slice(0, MAX_TECH[size]);
+    const more = (project.techStack || []).length - tech.length;
+    return (
+        <motion.article
+            variants={item}
+            className={`glass rounded-2xl p-5 flex flex-col justify-between gap-3 relative min-h-0 overflow-hidden ${project.link ? 'glass-link' : ''} ${cls}`}
+        >
+            {project.link && (
+                <a href={project.link} target="_blank" rel="noreferrer" className="absolute inset-0 z-10 rounded-2xl" aria-label={`View source for ${project.name}`} />
+            )}
+
+            <div className="pointer-events-none min-h-0">
+                <div className="flex items-start justify-between gap-2 mb-1.5">
+                    <h2 className={`font-bold leading-snug text-primary ${size === 'large' ? 'text-3xl' : size === 'medium' ? 'text-lg' : 'text-base line-clamp-1'}`}>
+                        {project.name}
+                    </h2>
+                    <div className="flex items-center gap-2 shrink-0 text-xs pt-1">
+                        {stars != null && <span aria-label={`${stars} stars`}>★ {stars}</span>}
+                        {project.status && size !== 'small' && (
+                            <span className="px-2 py-0.5 rounded-full border border-primary/50 text-accent">{project.status}</span>
+                        )}
+                    </div>
+                </div>
+                <p className={`text-tertiary ${DESC_CLAMP[size]}`}>{project.description}</p>
+            </div>
+
+            <div className="flex items-end justify-between gap-3 pointer-events-none">
+                {tech.length > 0 ? (
+                    <ul className="flex flex-wrap gap-1.5">
+                        {tech.map((t) => (
+                            <li key={t} className="text-[11px] leading-5 px-2 rounded-full border border-tertiary/20">
+                                {t}
+                            </li>
+                        ))}
+                        {more > 0 && <li className="text-[11px] leading-5 px-1 text-tertiary/80">+{more}</li>}
+                    </ul>
+                ) : (
+                    <span />
+                )}
+                <div className="relative z-20 flex items-center gap-3 shrink-0">
+                    {project.liveLink && (
+                        <a
+                            href={project.liveLink}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="pointer-events-auto text-xs px-3 py-1 rounded-full border border-primary/50 text-accent hover:bg-primary/10 transition"
+                        >
+                            Live
+                        </a>
+                    )}
+                    {project.link && <MdArrowOutward size={size === 'large' ? 26 : 20} className="text-accent" aria-hidden="true" />}
+                </div>
+            </div>
+        </motion.article>
+    );
+}
 
 export default async function Projects() {
     const projects = await getProjects();
     const liveStars = await getStars(projects.map((p) => p.githubRepo).filter(Boolean));
     const stars = Object.fromEntries(projects.map((p) => [p.id, liveStars[p.githubRepo] ?? p.stars ?? null]));
 
+    // Order: projects with a rank (set in admin) first, lowest rank first. The rest follow automatically:
+    // featured, then stars, then has a live site, then newest. Stable, so ties keep admin order.
+    const ranked = [...projects].sort(
+        (a, b) =>
+            (a.rank ?? 1e9) - (b.rank ?? 1e9) ||
+            Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
+            (stars[b.id] ?? 0) - (stars[a.id] ?? 0) ||
+            Number(Boolean(b.liveLink)) - Number(Boolean(a.liveLink)) ||
+            (b.startedAt || '').localeCompare(a.startedAt || '')
+    );
+    const shown = ranked.slice(0, SLOTS.length);
+    const archive = ranked.slice(SLOTS.length);
+
     return (
-        <motion.div variants={container} initial="hidden" animate="visible" className="flex-1 flex flex-col gap-4">
-            <motion.div variants={item} className="text-center my-4">
-                <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
-                    Project <HighlightedSpan>Portfolio</HighlightedSpan>
-                </h1>
-            </motion.div>
-
-            <motion.div variants={container} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {projects.map((project) => (
-                    <motion.div
-                        variants={item}
-                        key={project.id || project.name}
-                        className="glass rounded-2xl p-6 group flex flex-col justify-between transition-all relative"
-                    >
-                        {project.link && (
-                            <a
-                                href={project.link}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="absolute inset-0 z-10"
-                                aria-label={`View source for ${project.name}`}
-                            />
-                        )}
-
-                        <div className="relative z-10 pointer-events-none">
-                            <div className="flex items-start justify-between gap-2 mb-2">
-                                <h2 className="text-xl font-bold text-primary">{project.name}</h2>
-                                <div className="flex items-center gap-2 shrink-0 text-xs">
-                                    {stars[project.id] != null && <span>★ {stars[project.id]}</span>}
-                                    {project.status && (
-                                        <span className="px-2 py-0.5 rounded-full border border-primary/40 text-primary">
-                                            {project.status}
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                            <p className="text-sm text-tertiary line-clamp-4">{project.description}</p>
-                            {project.techStack?.length > 0 && (
-                                <div className="flex flex-wrap gap-1.5 mt-3">
-                                    {project.techStack.map((t) => (
-                                        <span key={t} className="text-[11px] px-2 py-0.5 rounded-full border border-tertiary/20">
-                                            {t}
-                                        </span>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                        <div
-                            className="relative z-20 mt-4 flex items-center justify-between
-                opacity-100 translate-y-0
-                md:opacity-0 md:translate-y-2
-                md:group-hover:opacity-100 md:group-hover:translate-y-0
-                transition-all duration-200"
-                        >
-                            {project.liveLink ? (
-                                <a
-                                    href={project.liveLink}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="pointer-events-auto text-xs px-3 py-1 rounded-full border border-primary/40 text-primary hover:bg-primary/10 transition"
-                                >
-                                    View Live Site
-                                </a>
-                            ) : (
-                                <span />
-                            )}
-
-                            {project.link && (
-                                <div className="pointer-events-none flex items-center gap-2 text-primary">
-                                    <span className="text-sm italic">View Source</span>
-                                    <MdArrowOutward size={22} />
-                                </div>
-                            )}
-                        </div>
-                    </motion.div>
+        <motion.div variants={container} initial="hidden" animate="visible" className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-12 gap-4">
+            <h1 className="sr-only">Projects</h1>
+            <motion.div
+                variants={container}
+                className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-9 lg:grid-rows-4 gap-4 min-h-0 ${archive.length ? 'lg:col-span-9' : 'lg:col-span-12'}`}
+            >
+                {shown.map((p, i) => (
+                    <Card key={p.id || p.name} project={p} stars={stars[p.id]} size={SLOTS[i].size} cls={`${SLOTS[i].cls} ${i === 0 ? 'sm:col-span-2' : ''}`} />
                 ))}
             </motion.div>
+
+            {archive.length > 0 && (
+                <motion.section variants={item} aria-labelledby="archive-title" className="glass rounded-2xl p-5 lg:col-span-3 min-h-0 flex flex-col gap-3">
+                    <h2 id="archive-title" className="tile-title">
+                        More projects · {archive.length}
+                    </h2>
+                    <ul className="flex flex-1 flex-col justify-between gap-1 min-h-0 overflow-y-auto -mx-2">
+                        {archive.map((p) => {
+                            const Row = p.link ? 'a' : 'div';
+                            const tech = (p.techStack || []).slice(0, 3);
+                            return (
+                                <li key={p.id || p.name}>
+                                    <Row
+                                        {...(p.link && { href: p.link, target: '_blank', rel: 'noreferrer' })}
+                                        className="flex items-start justify-between gap-3 rounded-lg px-2 py-2 hover:bg-tertiary/10 transition-colors"
+                                    >
+                                        <span className="min-w-0">
+                                            <span className="block text-sm font-bold text-tertiary truncate">{p.name}</span>
+                                            <span className="text-xs text-tertiary/80 line-clamp-1">{p.description}</span>
+                                            {(tech.length > 0 || p.status) && (
+                                                <span className="block text-[11px] text-accent truncate mt-0.5">{[...tech, p.status].filter(Boolean).join(' · ')}</span>
+                                            )}
+                                        </span>
+                                        {p.link && <MdArrowOutward className="text-accent shrink-0 mt-0.5" aria-hidden="true" />}
+                                    </Row>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </motion.section>
+            )}
         </motion.div>
     );
 }
-
