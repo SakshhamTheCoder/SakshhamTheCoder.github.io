@@ -43,11 +43,11 @@ function Card({ project, stars, size, cls }) {
                 {tech.length > 0 ? (
                     <ul className="flex flex-wrap gap-1.5">
                         {tech.map((t) => (
-                            <li key={t} className="text-[11px] leading-5 px-2 rounded-full border border-tertiary/20">
+                            <li key={t} className="text-[0.6875rem] leading-5 px-2 rounded-full border border-tertiary/20">
                                 {t}
                             </li>
                         ))}
-                        {more > 0 && <li className="text-[11px] leading-5 px-1 text-tertiary/80">+{more}</li>}
+                        {more > 0 && <li className="text-[0.6875rem] leading-5 px-1 text-tertiary/80">+{more}</li>}
                     </ul>
                 ) : (
                     <span />
@@ -63,7 +63,7 @@ function Card({ project, stars, size, cls }) {
                             Live
                         </a>
                     )}
-                    {project.link && <MdArrowOutward size={size === 'large' ? 26 : 20} className="text-accent" aria-hidden="true" />}
+                    {project.link && <MdArrowOutward size={size === 'large' ? '1.625rem' : '1.25rem'} className="text-accent" aria-hidden="true" />}
                 </div>
             </div>
         </motion.article>
@@ -111,7 +111,7 @@ export default async function Projects() {
                                             <span className="block text-sm font-bold text-tertiary truncate">{p.name}</span>
                                             <span className="text-xs text-tertiary/80 line-clamp-1">{p.description}</span>
                                             {(tech.length > 0 || p.status) && (
-                                                <span className="block text-[11px] text-accent truncate mt-0.5">{[...tech, p.status].filter(Boolean).join(' · ')}</span>
+                                                <span className="block text-[0.6875rem] text-accent truncate mt-0.5">{[...tech, p.status].filter(Boolean).join(' · ')}</span>
                                             )}
                                         </span>
                                         {p.link && <MdArrowOutward className="text-accent shrink-0 mt-0.5" aria-hidden="true" />}

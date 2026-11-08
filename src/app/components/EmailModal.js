@@ -44,7 +44,7 @@ export default function EmailModal({ email, onClose }) {
                 className="glass-navbar-popup rounded-2xl p-6 w-full max-w-sm relative mx-4"
             >
                 <button onClick={onClose} aria-label="Close" className="absolute top-4 right-4 text-tertiary hover:text-accent">
-                    <MdClose size={22} />
+                    <MdClose size="1.375rem" />
                 </button>
 
                 <h3 id="email-title" className="text-lg font-bold text-accent mb-4">

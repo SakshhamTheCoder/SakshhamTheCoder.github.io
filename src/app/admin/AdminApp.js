@@ -336,12 +336,12 @@ export default function AdminApp() {
                                             <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                                                 <span className="font-bold text-sm">{name}</span>
                                                 {place.label && (
-                                                    <span className={`text-[11px] leading-5 px-2 rounded-full border ${place.hidden ? 'border-tertiary/20' : 'border-primary/50 text-accent'}`}>
+                                                    <span className={`text-[0.6875rem] leading-5 px-2 rounded-full border ${place.hidden ? 'border-tertiary/20' : 'border-primary/50 text-accent'}`}>
                                                         {place.label}
                                                     </span>
                                                 )}
                                                 {chips(tab, it).map((c) => (
-                                                    <span key={c} className="text-[11px] leading-5 px-2 rounded-full border border-tertiary/20">
+                                                    <span key={c} className="text-[0.6875rem] leading-5 px-2 rounded-full border border-tertiary/20">
                                                         {c}
                                                     </span>
                                                 ))}

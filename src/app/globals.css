@@ -11,6 +11,16 @@
 /* Locked one-screen shell: wide enough for the bento and tall enough to fit it. Otherwise the page scrolls normally. */
 @custom-variant fit (@media (min-width: 64rem) and (min-height: 47rem));
 
+/* Design size is 1440x808. On desktop widths the whole UI scales with the viewport (every size is rem), by whichever of
+   width or height is the tighter fit, so gaps, type and icons grow together and the one-screen layouts keep their
+   proportions. It shrinks a little (to 90%) on small laptop screens and grows up to 160% on large ones, where
+   ultrawide screens then get side margins. Phones and tablets keep the user's own font size. */
+@media (min-width: 64rem) {
+    html {
+        font-size: clamp(90%, min(1.1111vw, 1.9802vh), 160%);
+    }
+}
+
 body {
     color: var(--color-tertiary);
     background: linear-gradient(to bottom, transparent, var(--color-background-end), transparent) var(--color-background);

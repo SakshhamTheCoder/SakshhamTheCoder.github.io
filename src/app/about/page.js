@@ -80,21 +80,21 @@ export default async function About() {
             </motion.div>
 
             <motion.section variants={item} className={`${tile} lg:col-span-8 order-2 lg:order-none`} aria-labelledby="skills-title">
-                <h2 id="skills-title" className="tile-title mb-4">
+                <h2 id="skills-title" className="tile-title mb-3">
                     Technical skillset
                 </h2>
-                <motion.div variants={container} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-3">
+                <motion.div variants={container} className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-2.5">
                     {SKILLS.map((group) => (
                         <motion.div key={group.id} variants={item}>
-                            <h3 className="flex items-center gap-2 mb-2 text-sm font-bold text-tertiary">
+                            <h3 className="flex items-center gap-2 mb-1.5 text-sm font-bold text-tertiary">
                                 <span className="text-primary text-base" aria-hidden="true">
                                     <Icon name={group.icon} />
                                 </span>
                                 {group.title}
                             </h3>
-                            <ul className="flex flex-wrap gap-1.5">
+                            <ul className="flex flex-wrap gap-1">
                                 {group.items.map((skill) => (
-                                    <li key={skill} className="text-[11px] leading-5 px-2 rounded-full border border-tertiary/20">
+                                    <li key={skill} className="text-[0.6875rem] leading-5 px-2 rounded-full border border-tertiary/20">
                                         {skill}
                                     </li>
                                 ))}
@@ -105,7 +105,7 @@ export default async function About() {
             </motion.section>
 
             <motion.section variants={item} className={`${tile} lg:col-span-4 flex flex-col justify-between gap-3 order-1 lg:order-none`} aria-label="Focus">
-                <p className="font-serif italic text-xl leading-snug text-tertiary">{profile.focus}</p>
+                <p className="font-serif italic text-lg leading-snug text-tertiary">{profile.focus}</p>
                 <div className="flex flex-col gap-2">
                     <p className="text-sm leading-snug">{profile.interests}</p>
                     {profile.location && (

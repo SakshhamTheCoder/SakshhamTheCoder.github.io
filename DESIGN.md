@@ -20,6 +20,7 @@ Dark red glass bento. Derived from the shipped code (`src/app/globals.css`, page
 - Gap between tiles is always `gap-4`.
 
 ## Layout
+- Scale: design size is 1440x808. From 1024px up, root font-size = `clamp(90%, min(1.1111vw, 1.9802vh), 160%)`, so every rem size (type, padding, gaps, icons) grows together on big screens and shrinks slightly on small laptops. Use rem for every size, never px. Content is capped at 112.5rem wide, centred.
 - Shell (`BodyLayout`): at `fit` (>=1024px wide and >=47rem tall) the page is `h-dvh` and never scrolls. Tiles that can outgrow their space (About tiles, Projects grid, admin panels) scroll inside themselves. Below `fit` the page scrolls normally.
 - Home: 3 columns. Row 1: hero + About | photo + Resume/Projects | Experience. Row 2: contribution chart (2 columns) + socials grid.
 - About: Profile | Skills (2 cols), then Experience (2 cols) | Achievements.
