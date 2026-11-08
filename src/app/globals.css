@@ -6,6 +6,15 @@
     --color-tertiary: #c49d9d;
     --color-background: #130909;
     --color-background-end: #191210;
+
+    /* Display serif: Newsreader italic, loaded in layout.js (variable is set on <html>). */
+    --font-serif: var(--font-newsreader), Georgia, 'Times New Roman', serif;
+
+    /* One ease for every arrival and hover, the same curve as motion's `ease` in Transition.js. */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Colour and fill changes take 200ms everywhere (movement takes 350ms, see .glass-link). */
+    --default-transition-duration: 200ms;
 }
 
 /* Locked one-screen shell: wide enough for the bento and tall enough to fit it. Otherwise the page scrolls normally. */
@@ -25,6 +34,21 @@ body {
     color: var(--color-tertiary);
     background: linear-gradient(to bottom, transparent, var(--color-background-end), transparent) var(--color-background);
     scrollbar-gutter: stable;
+}
+
+/* Real Fira italic for sans italics; serif italics (.font-serif) use Newsreader. */
+.italic:not(.font-serif) {
+    font-family: var(--font-fira-italic), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Prose wraps without lone last words; headings balance. */
+p {
+    text-wrap: pretty;
+}
+h1,
+h2,
+h3 {
+    text-wrap: balance;
 }
 
 #tsparticles {
@@ -61,39 +85,88 @@ body {
     }
 }
 
-/* Static tile. Add .glass-link when the whole tile is clickable. */
+/* Static tile: a soft highlight on the top edge gives the glass an edge. Add .glass-link when the whole tile is clickable. */
 .glass {
-    @apply bg-tertiary/5 border border-tertiary/10 bg-clip-padding backdrop-blur;
+    @apply bg-tertiary/5 border border-tertiary/10 bg-clip-padding backdrop-blur shadow-[inset_0_1px_0_rgb(255_255_255/0.05)];
 }
 
+/* Clickable tiles lift and light their border instead of scaling, so text stays sharp and neighbours are not overlapped.
+   Their text is not selectable: a click is the action. */
 .glass-link {
-    transition: scale 0.1s ease-in-out, background-color 0.15s;
-    @apply hover:bg-tertiary/10 hover:scale-[1.02];
+    user-select: none;
+    transition:
+        translate 0.35s var(--ease-out-expo),
+        background-color 0.2s,
+        border-color 0.2s,
+        box-shadow 0.35s var(--ease-out-expo);
+    @apply hover:bg-tertiary/10 hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.08),0_0.75rem_1.5rem_-0.75rem_rgb(0_0_0/0.6)];
+}
+
+/* The arrow on a link tile nudges toward its direction on hover. */
+.link-arrow {
+    transition: translate 0.35s var(--ease-out-expo);
+}
+.glass-link:hover .link-arrow,
+a:hover > .link-arrow {
+    translate: 0.125rem -0.125rem;
 }
 
 .glass-navbar-popup {
-    @apply bg-tertiary/5 border border-tertiary/10 bg-clip-padding backdrop-blur-2xl;
+    @apply bg-tertiary/5 border border-tertiary/10 bg-clip-padding backdrop-blur-2xl shadow-[inset_0_1px_0_rgb(255_255_255/0.05)];
 }
 
 /* Shared tile typography: one title style, one link-label style. */
 .tile-title {
-    @apply text-xs font-bold uppercase tracking-widest text-accent;
+    @apply text-xs font-bold uppercase tracking-[0.16em] text-accent;
+}
+
+/* A heading one level below a tile title (inside the same tile): same caps and tracking, quieter colour. */
+.tile-subtitle {
+    @apply text-xs font-bold uppercase tracking-[0.16em] text-tertiary;
 }
 
 .tile-label {
     @apply font-serif italic text-3xl text-tertiary;
 }
 
+/* A list that scrolls inside its tile fades out at the bottom edge so the cut reads as "more below". */
+.scroll-fade {
+    mask-image: linear-gradient(to bottom, black calc(100% - 1.75rem), transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .glass-link {
+    .glass-link,
+    .link-arrow {
         transition: none;
     }
     .glass-link:hover {
-        scale: 1;
+        translate: none;
+    }
+    .glass-link:hover .link-arrow,
+    a:hover > .link-arrow {
+        translate: none;
     }
 }
 
-/* Contribution chart cell: shared here so 371 cells do not each repeat the utility list. */
+/* Contribution chart cell: shared here so 371 cells do not each repeat the utility list.
+   Cells arrive as a left-to-right wave (--w is the week index) and light up under the pointer. */
 .chart-cell {
-    @apply relative aspect-square rounded-xs hover:after:block focus:after:block after:hidden after:content-[attr(data-tip)] after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:mb-1 after:z-20 after:whitespace-nowrap after:rounded after:bg-black after:px-2 after:py-1 after:text-xs after:text-tertiary;
+    animation: cell-in 0.6s var(--ease-out-expo) both;
+    animation-delay: calc(var(--w, 0) * 9ms + 250ms);
+    transition: scale 0.2s var(--ease-out-expo);
+    @apply relative aspect-square rounded-xs hover:scale-150 hover:z-10 hover:after:block focus:after:block after:hidden after:content-[attr(data-tip)] after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:mb-1.5 after:z-20 after:whitespace-nowrap after:rounded-md after:border after:border-tertiary/15 after:bg-background after:px-2 after:py-1 after:text-xs after:text-tertiary after:shadow-lg after:scale-[0.667];
+}
+
+@keyframes cell-in {
+    from {
+        opacity: 0;
+        scale: 0.4;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .chart-cell {
+        animation: none;
+        transition: none;
+    }
 }
