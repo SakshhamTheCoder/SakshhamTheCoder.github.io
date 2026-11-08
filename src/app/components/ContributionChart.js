@@ -1,11 +1,13 @@
 import { MdArrowOutward } from 'react-icons/md';
 
-const LEVELS = ['bg-tertiary/15', 'bg-primary/35', 'bg-primary/60', 'bg-primary', 'bg-accent'];
+// A steady blue ramp (each step about 1.5x the last in luminance), ending in a near-white blue for the busiest days.
+const LEVELS = ['bg-tertiary/20', 'bg-primary/50', 'bg-primary/75', 'bg-primary', 'bg-[color-mix(in_srgb,var(--color-accent),white_35%)]'];
 
 // cal comes from getContributions(); the page decides whether to render the tile.
 export default function ContributionChart({ cal }) {
     const max = Math.max(1, ...cal.weeks.flatMap((w) => w.contributionDays.map((d) => d.contributionCount)));
-    const level = (n) => (n === 0 ? 0 : Math.ceil((n / max) * 4));
+    // Square root, so one huge day does not push every normal day into the dimmest step.
+    const level = (n) => (n === 0 ? 0 : Math.ceil(Math.sqrt(n / max) * 4));
 
     return (
         <div
