@@ -26,7 +26,7 @@ function LiveButton({ href, name }) {
             target="_blank"
             rel="noreferrer"
             aria-label={`Open live site for ${name}`}
-            className="pointer-events-auto relative z-20 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-0.5 text-xs text-white transition hover:brightness-90"
+            className="pointer-events-auto relative z-20 inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-0.5 text-xs text-background transition hover:brightness-90"
         >
             Live
             <MdOpenInNew aria-hidden="true" />
