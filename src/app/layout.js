@@ -62,9 +62,9 @@ export default async function RootLayout({ children }) {
     };
     return (
         <html lang="en" className={`${firaItalic.variable} ${newsreader.variable}`}>
-            <meta name="theme-color" content="#DA0037" />
-            <meta name="msapplication-TileColor" content="#DA0037" />
-            <meta name="msapplication-navbutton-color" content="#DA0037" />
+            <meta name="theme-color" content="#0a0d10" />
+            <meta name="msapplication-TileColor" content="#0a0d10" />
+            <meta name="msapplication-navbutton-color" content="#0a0d10" />
             <body className={firaSans.className}>
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }} />
                 <ParticlesBackground>

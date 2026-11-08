@@ -1,11 +1,11 @@
 @import 'tailwindcss';
 
 @theme {
-    --color-primary: #da0037; /* fills, borders, icons, large type */
-    --color-accent: #ff3b5f; /* small text on dark: 4.9:1 on glass */
-    --color-tertiary: #c49d9d;
-    --color-background: #130909;
-    --color-background-end: #191210;
+    --color-primary: #7d9bb0; /* fills, borders, icons, large type: 6.6:1 on background */
+    --color-accent: #afc5d4; /* small text on dark */
+    --color-tertiary: #b0aea6; /* body text: halfway between the blue-grey UI and the warm particles */
+    --color-background: #0a0d10;
+    --color-background-end: #101519;
 
     /* Display serif: Newsreader italic, loaded in layout.js (variable is set on <html>). */
     --font-serif: var(--font-newsreader), Georgia, 'Times New Roman', serif;
